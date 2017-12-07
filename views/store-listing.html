@@ -1,0 +1,196 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-inner">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head inner-head">
+                <% include ./partials/menu-area.html %>
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- =================================================
+    Header Area End -->
+    <!-- Breadcrumb Area Start
+    ====================================================== -->
+    <section class="store-listing-main">
+        <div class="filter-header">
+            <div class="container">
+                <!-- Start: Top Head Area -->
+                <div class="breadcrumb-main for-storelisting">
+                    <ul class="crumb">
+                        <li><a href="<%=BASE_URL%>">Home</a></li>
+                        <li class="active"><a href="javascript:;">Stores</a></li>
+                    </ul>
+                    <div class="storefilter-area clearfix">
+                        <div class="filterleft-cont">
+                            <span>Showing <span id="showingResults"><%= data.stores&&data.stores.length>0?'1':'0' %>-<%=data.stores.length%></span></span> of <span id="resultTotal">&<%=data.stores.length%></span>
+                            <%=data.query.storeType%> stores near
+                                <%=data.query.cityName%><span id="showingResultsIn"></span> &nbsp; &nbsp;<a class="add-filter-btn" href="#">Add Filter</a>
+                        </div>
+                        <!--                             <span>Showing <span id="showingResults"><%=data.stores&&data.stores.length>0?'1':'0'%>-<%=data.stores.length%></span></span> of <span id="resultTotal"><%=data.query.storeCount%></span> dealerships and workshops
+                            <span id="showingResultsIn"></span> &nbsp; &nbsp;<a class="add-filter-btn" href="#">Add Filter</a></div> -->
+                        <div class="filterright-cont clearfix">
+                            <label for="checkbox-1">Stores with Offers only</label>
+                            <input type="checkbox" name="checkbox-1" id="checkbox-1" class="ui-checkboxs" onchange="sortByOffers(this.checked)">
+                            <div class="selectbx-div clearfix">
+                                <label>Sort by:</label>
+                                <select name="" class="select-ui" id="sortBy">
+                                    <option>Date</option>
+                                    <option selected="selected">Name</option>
+                                    <option>Type</option>
+                                    <option>Featured</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End: Top Head Area -->
+            </div>
+        </div>
+        <!-- Start: Filter Settings Popup -->
+        <div class="filter-settings-pop">
+            <div class="popup-cont">
+                <div class="container">
+                    <div class="filter-header-area clearfix">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="left-area full-width">
+                                    <!-- <a href="#" class="tags">BMW <img src="<%=BASE_URL%>img/close-small-ico.png" alt=""></a> -->
+                                    <input id="select-tools" placeholder="Enter Make Name" score="getMake()">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="right-area">
+                                    <a href="javascript:" id="resetFilter" onclick="reloadFilter()" class="nobg-btn-blue">
+                                        <img src="<%=BASE_URL%>img/reset-ico.png" alt=""> Reset All</a>
+                                    <a href="javascript:;" onclick="applyFilters()" class="green-btn-02" id="show-result">Show result</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-content-area">
+                        <div class="first-section clearfix">
+                            <div class="select-store">
+                                <label>Select Store <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                <div class="activity-btn-all">
+                                    <div class="activity-btns" id="rate-time-spent">
+                                        <ul class="filterStoreType">
+                                            <li onclick="setStoreType(this)" class="dealership-selector <%= (data.query.storeType == 'dealership' || data.query.storeType == 'dealership-workshop')? 'active':'' %>">
+                                                <a href="" class="act-btn" data-value="dealership">Dealership</a></li>
+                                            <li onclick="setStoreType(this)" class="workshop-selector <%= (data.query.storeType == 'workshop' || data.query.storeType == 'dealership-workshop')? 'active':'' %>">
+                                                <a href="" class="act-btn" data-value="workshop">Workshop</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="distance-range">
+                                <label>Distance/Range <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                <div class="slide-bar">
+                                    <input id="km-slide" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="second-section clearfix">
+                            <div class="fliter-rating">
+                                <div class="overall-rating">
+                                    <label>Overall Rating <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                    <div class="ratting-div clearfix" id="overall-rating-div">
+                                        <select class="example-square" name="rating" id="overall-rating" autocomplete="off">
+                                            <option value=""></option>
+                                            <option value="1" data-html="terrible">1</option>
+                                            <option value="2" data-html="poor">2</option>
+                                            <option value="3" data-html="average">3</option>
+                                            <option value="4" data-html="very good">4</option>
+                                            <option value="5" data-html="excellent">5</option>
+                                        </select>
+                                        <div class="ratting-detail" id="overall-rating-detail"><span class="tip"></span> Click to rate</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recommendation-rate">
+                                <label>Recommendation rate <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                <div class="slide-bar">
+                                    <input id="rate-slide" type="text" data-slider-ticks="[0, 25, 50, 75, 100]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["0", "25", "50", "75", "100"]' />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End: Filter Settings Popup -->
+        <div id="foundContainer" style="display: none">
+            <div class="container store-itmsall">
+                <!-- Start: Content Area -->
+                <div class="listingcont-main clearfix">
+                    <div class="allleft-content">
+                        <ul class="store-listall" id="storeListAll">
+                        </ul>
+                    </div>
+                </div>
+                <!-- End: Content Area -->
+            </div>
+            <div class="map-floated-area">
+                <div class="container clearfix">
+                    <div class="mapright-content stick-to-parent">
+                        <!-- Start: Map Area -->
+                        <div class="store-map">
+                            <!-- Start: Google Map -->
+                            <!-- <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34922.118797071074!2d74.88321887582246!3d12.907149987179631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba35a4c37bf488f%3A0x827bbc7a74fcfe64!2sMangaluru%2C+Karnataka!5e0!3m2!1sen!2sin!4v1501153305819" frameborder="0" style="border:0" allowfullscreen></iframe> -->
+                            <!-- End: Google Map -->
+                            <div id="map-frame">
+                                <div id="map_canvas" class="mapping map-frame"></div>
+                            </div>
+                        </div>
+                        <!-- End: Map Area -->
+                        <!-- Start: Featured Store -->
+                        <div class="featured-store-all">
+                            <ul class="store-listall" id="storeFeatured">
+                            </ul>
+                        </div>
+                        <!-- End: Featured Store -->
+                        <!-- Start: Compare Button -->
+                        <div class="compare-button">
+                            <a class="compare-btn" href="#" onclick="goToCompare()" onmouseover="showOnHover(this)">COMPARE <span class="compareCount">0</span></a>
+                            <!-- Start: Compare popup -->
+                            <div class="compare-items-cont index-9999" onmouseover="showOnHover(this)" onmouseleave="hideOnLeave(this)">
+                                <div class="itms-all">
+                                    <ul class="clearfix" id="compareStoresPortion">
+                                    </ul>
+                                </div>
+                                <div class="btn-conts">
+                                    <a id="removeAll" class="remove-btn" onclick="removeAllCompare()" href="javascript:;">Remove All</a>
+                                    <a class="compare-btn" href="#" onclick="goToCompare()" onmouseover="showOnHover(this)">COMPARE <span class="compareCount">0</span></a>
+                                </div>
+                            </div>
+                            <!-- End: Compare popup -->
+                        </div>
+                        <!-- End: Compare Button -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container clearfix" id="notFoundContainer" >
+            <!-- Start: Not found Container -->
+            <div class="help-container">
+                <div class="help-title clearfix">
+                    <h3>Sorry, No results found!</h3>
+                </div>
+                <hr>
+                <div class="help-result">
+                    <div class="no-result">
+                        <p>Do you want to reset filters and retry searching? Yes, please retry </p>
+                        <a href="<%=BASE_URL%>">Goto home</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Start: Not found Container -->
+        </div>
+    </section>
+    <!-- =================================================
+    Breadcrumb Area End -->
+    <script>
+    var data = <%- JSON.stringify(data)%>;
+    </script>
+    <% include ./partials/footer.html %>

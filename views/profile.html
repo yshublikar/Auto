@@ -1,0 +1,228 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-main">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head store-banner" style="background:url(<%=BASE_URL+'img/store-head-bg.jpg'%>);">
+                <% include ./partials/menu-area.html %>
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- =================================================
+    Header Area End -->
+    <!-- Breadcrumb Area Start
+    ====================================================== -->
+    <section class="breadcrumb-main">
+        <div class="container">
+            <ul class="crumb">
+                <li><a href="<%=BASE_URL%>">Home</a></li>
+                <li class="active"><a href="#">Profile</a></li>
+            </ul>
+        </div>
+    </section>
+    <!-- =================================================
+    Breadcrumb Area End -->
+    <!-- Profile Area Start
+    ====================================================== -->
+    <section class="prifile-main" id="profile-tabs">
+        <!-- Start: Top Links -->
+        <div class="container">
+            <%if(data.userDetails&&data.docs.userId===data.userDetails.userId){%>
+                <ul class="profile-links">
+                    <li><a href="#user-profile"><i class="fa fa-user" aria-hidden="true"></i> Profile</a></li>
+                    <li><a href="#edit-profile"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a></li>
+                    <li><a href="#profile-settings"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
+                </ul>
+                <%}%>
+        </div>
+        <!-- End: Top Links -->
+        <!-- Start: Profile Section -->
+        <div class="profile-cont" id="user-profile">
+            <div class="profile-top">
+                <div class="container clearfix">
+                    <!-- Start: Profile Photo -->
+                    <div class="profile-photo">
+                        <div class="photo-cont">
+                            <a href="#">
+                                <img src="<%=( BASE_URL + (data.docs && data.docs.anonymous ? data.docs.avatarImage: (data.docs ? data.docs.profileImage : '') ))%>" alt="" onerror="this.src='<%=BASE_URL%>img/user-demo.png'">
+                                
+                            </a>
+                        </div>
+                        <h5><%=(data.docs && data.docs.anonymous ? data.docs.displayName: (data.docs ? data.docs.name : 'Unknown user') )%></h5>
+                        <span class="location"><i class="fa fa-map-marker" aria-hidden="true"></i> <%=data.docs.location?data.docs.location:"Not mentioned"%></span>
+                    </div>
+                    <!-- End: Profile Photo -->
+                    <!-- Start: Profile Details -->
+                    <div class="profile-details">
+                        <div class="user-status">
+                            <ul class="u-stat">
+                                <li><span><%=data.count%></span>experiences</li>
+                                <li><span><%=data.totalComments%></span>responses</li>
+                                <!-- <li><span>~151k</span>people reached</li> -->
+                            </ul>
+                            <div class="small-stat">
+                                <ul>
+                                    <li>Member for <span><%=moment(data.docs.createdAt).fromNow()%></span></li>
+                                    <li><span><%=data.docs.profileViews?data.docs.profileViews:0%></span> profile views</li>
+                                    <li>Last seen <span><%=moment(data.docs.lastLoggedIn).fromNow()?moment(data.docs.lastLoggedIn).fromNow():"-"%></span></li>
+                                   <!--  <li>Visited <span>295 days, 1 consecutive</span></li> -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Start: Profile Details -->
+                    <!-- Start: About details -->
+                    <div class="about-user">
+                        <h5>About me</h5>
+                        <p>
+                            <%=data.docs.about?data.docs.about:"Not mentioned"%>
+                        </p>
+                    </div>
+                    <!-- Start: About details -->
+                </div>
+            </div>
+            <div class="prof-activity-area">
+                <div class="container">
+                    <h3>Top Activity</h3>
+                    <div class="activity-tab-area" id="activity-tabs">
+                        <ul class="activity-links">
+                            <li onclick="filterExp('All')"><a href="javascript:;">All</a></li>
+                            <li onclick="filterExp('Newest')"><a href="javascript:;">Newest</a></li>
+                            <li onclick="filterExp('Experiences')"><a href="javascript:;">Experiences</a></li>
+                            <li onclick="filterExp('Responses')"><a href="javascript:;">Responses</a></li>
+                            <li onclick="filterExp('Like')"><a href="javascript:;">Like</a></li>
+                        </ul>
+                        <!-- Start: All Activities -->
+                        <div id="all-activity">
+                            <ul class="activity-result-list">
+                            </ul>
+                            <!-- Start: pagination -->
+                            <div class="pagination-01">
+                                <ul class="pagination">
+                                </ul>
+                            </div>
+                            <!-- End: pagination -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End: Profile Section -->
+        <!-- Start: Profile Section -->
+        <%if(data.userDetails&&data.docs.userId===data.userDetails.userId){%>
+            <div class="edit-profile-cont" id="edit-profile">
+                <div class="container">
+                    <div class="user-edit-form profile-head">
+                        <div class="error-main-mess" style="display:none;"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
+                        <h4>Public Information</h4>
+                        <form method="post" name="profileFrm" id="profileFrm" action="<%= BASE_URL+'update/profile'%>">
+                            <label>Display name</label>
+                            <input type="text" name="displayName" id="displayName" class="frm-txt-gray" placeholder="Display name" value="<%=data.docs.displayName%>" required>
+                            <label>About me</label>
+                            <textarea class="frm-txtarea-gray" name="about" id="about" placeholder="Describe about yourself" rows="6" cols="50" minlength="200" required><%=data.docs.about?data.docs.about.trim():""%></textarea>
+                            <div class="char-count">200 character minimum</div>
+                            <div class="button-aligns-center">
+                                <button type="submit" class="green-btn-01 profile-smt"><i class="fa fa-check" aria-hidden="true"></i> Save Profile</button>
+                                <!-- <button type="button" class="blue-btn-01"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button> -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End: Profile Section -->
+            <!-- Start: Profile Section -->
+            <div class="profile-settings-cont" id="profile-settings">
+                <div class="container">
+                    <div class="user-settings-form">
+                        <div class="error-main-mess" style="display:none;"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
+                        <h6>Notification</h6>
+                        <div class="setting-email clearfix">
+                            <label for="checkbox-1">Email me my unread message</label>
+                            <input type="checkbox" name="emailMeMyMessages" id="checkbox-1" 
+                            class="ui-checkboxs setting-smt" <%=data.docs.emailMeMyMessages==true? 'checked':''%> value="true">
+                            <!-- <select name="notification" id="notification" class="select-ui">
+                                <option <%=data.docs.notification=="Hourly" ?selected="selected" : ""%>>Hourly</option>
+                                <option <%=data.docs.notification=="Daily" ?selected="selected" : ""%>>Daily</option>
+                                <option <%=data.docs.notification=="Weekly" ?selected="selected" : ""%>>Weekly</option>
+                                <option <%=data.docs.notification=="Monthly" ?selected="selected" : ""%>>Monthly</option>
+                            </select> -->
+                        </div>
+                        <div class="setting-newsletter">
+                            <!-- <h6>Newsletter</h6> -->
+                            <!-- <p>Sign up for a weekly email with top experiences and responses, important announcements etc.</p> -->
+                            <label for="checkbox-2"> Subscribe to our newsletter.</label>
+                            <input type="checkbox" name="isSubscribed" id="checkbox-2" class="ui-checkboxs setting-smt" <%=data.docs.isSubscribed==true? "checked": ""%> value="true">
+                        </div>
+
+                           <div class="setting-newsletter"> 
+                            <h6>Anonymous user</h6>
+                            <label for="checkbox-3">Make me as anonymous user</label>
+                            <input type="checkbox" name="anonymous" id="checkbox-3" class="ui-checkboxs setting-smt" <%=data.docs.anonymous==true? "checked": ""%> value="true">
+                          </div>
+                        <!-- <div class="button-aligns-center">
+                            <button type="button" class="green-btn-01 setting-smt"><i class="fa fa-check" aria-hidden="true"></i> Save Profile</button>
+                            <button type="button" class="blue-btn-01"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <%}%>
+                <!-- End: Profile Section -->
+    </section>
+    <!-- =================================================
+    Profile Area End -->
+    <% include ./partials/footer.html %>
+        <script type="text/javascript">
+        var startFrom = 1
+        var filter = { filterBy: "All" };
+        getUserActivity(0, 5, 1, startFrom);
+
+
+        function nextPage(limit) {
+            var activePage = $('.pagination-01 .pagination .active').attr("id");
+            var method = $('.pagination-01 .pagination .active').attr("onclick");
+            var values = method.substring(method.indexOf('(') + 1, method.lastIndexOf(')') - 1).split(',');
+            var skip = parseInt(values[0]) + parseInt(values[1]);
+            if (((skip / limit) % 10) === 0) {
+                startFrom = startFrom + 10;
+            }
+            activePage = parseInt(activePage) + 1;
+            getUserActivity(skip, limit, activePage, startFrom)
+        }
+
+        function prevPage(limit) {
+            var activePage = $('.pagination-01 .pagination .active').attr("id");
+            var method = $('.pagination-01 .pagination .active').attr("onclick");
+            var values = method.substring(method.indexOf('(') + 1, method.lastIndexOf(')') - 1).split(',');
+            var skip = parseInt(values[0]) - parseInt(values[1]);
+            if (skip > 0 && ((skip / limit) % 10) === 0) {
+                startFrom = startFrom - 10;
+            }
+            activePage = parseInt(activePage) - 1;
+            getUserActivity(skip, limit, activePage, startFrom)
+        }
+
+        function more(limit) {
+            var dottedPostion = $('.pagination-01 .pagination .dotted').attr("id");
+            var method = $('.pagination-01 .pagination .dotted').attr("onclick");
+            var values = method.substring(method.indexOf('(') + 1, method.lastIndexOf(')') - 1).split(',');
+            var skip = parseInt(values[0]) - parseInt(values[1]);
+            activePage = startFrom = parseInt(dottedPostion) + 1;
+            getUserActivity(skip, limit, activePage, startFrom)
+        }
+
+        function less(limit) {
+            var dottedPostion = $('.pagination-01 .pagination .dotted').attr("id");
+            var method = $('.pagination-01 .pagination .dotted').attr("onclick");
+            var values = method.substring(method.indexOf('(') + 1, method.lastIndexOf(')') - 1).split(',');
+            var skip = parseInt(values[0]) - parseInt(values[1]);
+            activePage = startFrom = parseInt(dottedPostion) - 1;
+            getUserActivity(skip, limit, activePage, startFrom)
+        }
+
+        function filterExp(filterBy) {
+            filter.filterBy = filterBy;
+            getUserActivity(0, 5, 1, startFrom);
+        }
+        </script>

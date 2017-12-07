@@ -1,0 +1,136 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-inner">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head store-banner" style="background: url(<%=((data.store && data.store.makeId && data.store.makeId.brandingImage) ? BASE_URL+data.store.makeId.brandingImage : BASE_URL)%>), url(<%=BASE_URL%>img/store-head-bg.jpg);">
+                <% include ./partials/menu-area.html %>
+                    <!-- Start: Banner Area -->
+                    <% include ./partials/faq-head.html %>
+                        <!-- Start: Banner Area -->
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- Breadcrumb Area Start
+    ====================================================== -->
+    <section class="breadcrumb-main">
+        <div class="container">
+            <ul class="crumb">
+                <li><a href="<%=BASE_URL%>">Home</a></li>
+                <li class="active"><a href="javascript:;">Search results</a></li>
+            </ul>
+        </div>
+    </section>
+    <!-- =================================================
+    Breadcrumb Area End -->
+    <!-- FAQ Content Area Start 
+    ====================================================== -->
+    <section class="who-we-are">
+        <div class="container clearfix">
+            <!-- Start: Help Container -->
+            <div class="help-container">
+                <div class="result-section">
+                </div>
+                
+                <!-- Start: pagination -->
+                <div class="pagination-01">
+                    <ul class="pagination">
+                    </ul>
+                </div>
+                <!-- End: pagination -->
+            </div>
+            <!-- Start: Help Container -->
+        </div>
+    </section>
+    <!-- =================================================
+    FAQ Content Area End -->
+    <!-- Footer Area Start 
+    ====================================================== -->
+    <% include ./partials/footer.html %>
+        <script type="text/javascript">
+        var searchKey = "<%=data.searchKey%>";
+
+        var startFrom = 1
+        getQuestions(0, 5, 1, startFrom, searchKey);
+
+        function getQuestions(skip, limit, liId, startFrom, searchKey) {
+            $.ajax({
+                url: BASE_URL + "faq/search?search=" + searchKey + "&skip=" + skip + "&limit=" + limit + "&startFrom=" + startFrom,
+                method: 'GET', // 'POST'
+                cache: false,
+                dataType: 'json',
+                data: {},
+                headers: {},
+                success: function(response) {
+                    console.log("ppppppp", response)
+
+                    if (response.status === 'success') {
+                        $('.result-section').html(response.html);
+                        $('.pagination-01 .pagination').html(response.pagination);
+                        $('.pagination-01 .pagination .active').removeClass('active');
+                        $('#' + liId + '').addClass('active');
+                        // $(".popover-toggle").attr("data-toggle", "popover");
+                    } else {
+                        $('#createexperiences').css('display', 'none');
+                    }
+
+                },
+                error: function(error) {
+                    /*$('.first-step .error-main-mess').text(error.message);
+                    $('#createexperiences').css('display', 'none');*/
+
+                },
+                beforeSend: function() {
+
+                },
+                complete: function() {
+                    // We can make status as processing done for forms and all.
+                }
+            })
+        }
+
+
+        function nextPage(limit) {
+            var activePage = $('.pagination-01 .pagination .active').attr("id");
+            var method = $('.pagination-01 .pagination .active').attr("onclick");
+            var values = method.substring(method.indexOf('(') + 1, method.lastIndexOf(')') - 1).split(',');
+            var skip = parseInt(values[0]) + parseInt(values[1]);
+            if (((skip / limit) % 10) === 0) {
+                startFrom = startFrom + 10;
+            }
+            activePage = parseInt(activePage) + 1;
+            console.log("data", skip, limit, activePage, startFrom)
+            getQuestions(skip, limit, activePage, startFrom, searchKey)
+        }
+
+        function prevPage(limit) {
+            var activePage = $('.pagination-01 .pagination .active').attr("id");
+            var method = $('.pagination-01 .pagination .active').attr("onclick");
+            var values = method.substring(method.indexOf('(') + 1, method.lastIndexOf(')') - 1).split(',');
+            var skip = parseInt(values[0]) - parseInt(values[1]);
+            if (skip > 0 && ((skip / limit) % 10) === 0) {
+                startFrom = startFrom - 10;
+            }
+            activePage = parseInt(activePage) - 1;
+            getQuestions(skip, limit, activePage, startFrom, searchKey)
+        }
+
+        function more(limit) {
+            var dottedPostion = $('.pagination-01 .pagination .dotted').attr("id");
+            var method = $('.pagination-01 .pagination .dotted').attr("onclick");
+            var values = method.substring(method.indexOf('(') + 1, method.lastIndexOf(')') - 1).split(',');
+            var skip = parseInt(values[0]) - parseInt(values[1]);
+            activePage = startFrom = parseInt(dottedPostion) + 1;
+            getQuestions(skip, limit, activePage, startFrom, searchKey)
+        }
+
+        function less(limit) {
+            var dottedPostion = $('.pagination-01 .pagination .dotted').attr("id");
+            var method = $('.pagination-01 .pagination .dotted').attr("onclick");
+            var values = method.substring(method.indexOf('(') + 1, method.lastIndexOf(')') - 1).split(',');
+            var skip = parseInt(values[0]) - parseInt(values[1]);
+            activePage = startFrom = parseInt(dottedPostion) - 1;
+            getQuestions(skip, limit, activePage, startFrom, searchKey)
+        }
+        </script>

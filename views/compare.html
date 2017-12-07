@@ -1,0 +1,124 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-main">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head inner-head">
+                <% include ./partials/menu-area.html %>
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- =================================================
+    Header Area End -->
+    <!-- Breadcrumb Area Start
+    ====================================================== -->
+    <section class="breadcrumb-main">
+        <div class="container">
+            <ul class="crumb">
+                <li><a href="<%=BASE_URL%>">Home</a></li>
+                <li class="active"><a href="javascript:;">Compare</a></li>
+            </ul>
+        </div>
+    </section>
+    <!-- =================================================
+    Breadcrumb Area End -->
+    <!-- Profile Area Start
+    ====================================================== -->
+    <section class="compare-main">
+        <div class="container">
+            <!-- Start: Top Items -->
+            <div class="row company-all clearfix">
+                <!-- Start: Item 03 -->
+                <div class="col-md-3">
+                    <a href="<%=BASE_URL  + (data.city && data.city.name) +'/stores' + '?city='+ (data.city && data.cityId) %>" class="addtocompare-btn">
+                        <img src="img/car-ico.png" alt=""><br>
+                        <span>Add to compare</span>
+                    </a>
+                </div>
+                <!-- Start: Item 03 -->
+            </div>
+        </div>
+    </section>
+    <!-- =================================================
+    Profile Area End -->
+    <% include ./partials/footer.html %>
+        <script type="text/javascript">
+        var storeIds = $.parseJSON(readCookie('storeCompare')) || [];
+        if (storeIds.length > 1) {
+            function getStoreCompared(storeIds) {
+                if (storeIds.length > 1) {
+                    $.ajax({
+                        url: BASE_URL + "getComparedStores?storeIds=" + storeIds.join(),
+                        method: 'GET', // 'POST'
+                        cache: false,
+                        dataType: 'json',
+                        data: {},
+                        headers: {},
+                        success: function(response) {
+                            // console.log(response)
+
+                            if (response.status === 'success') {
+                                $('.compare-main .container').html(response.html);
+                            } else {
+                                alert(response && response.message || "");
+                                window.location = BASE_URL + (data.city && data.city.name) + '/stores' + '?city=' + (data.city && data.city.cityId)
+                            }
+
+                        },
+                        error: function(error) {
+                            alert(error && error.message || "");
+                            window.location = BASE_URL + (data.city && data.city.name) + '/stores' + '?city=' + (data.city && data.city.cityId)
+
+                        },
+                        beforeSend: function() {
+
+                        },
+                        complete: function() {
+                            // We can make status as processing done for forms and all.
+                        }
+                    })
+                } else {
+                    alert("Please add minimun 2 store to compare");
+                    window.location = BASE_URL + (data.city && data.city.name) + '/stores' + '?city=' + (data.city && data.city.cityId)
+
+                }
+
+            }
+            getStoreCompared(storeIds)
+
+        } else {
+            alert("Please add minimun 2 store to compare");
+            window.location = BASE_URL + changeToVanityurl(data.city && data.city.name) + '/stores' + '?city=' + (data.city && data.city.cityId)
+
+        }
+
+        function removeStore(id) {
+            if (storeIds.indexOf(id) > -1) {
+                storeIds.splice(storeIds.indexOf(id), 1)
+                if (storeIds.length > 0) {
+                    getStoreCompared(storeIds);
+                }
+                createCookie('storeCompare', JSON.stringify(storeIds))
+            }
+        }
+        </script>
+        <style type="text/css">
+        #content {
+            overflow: hidden;
+            width: 250px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+        }
+
+        .exp-title {
+            overflow: hidden;
+            width: 250px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+        }
+        </style>

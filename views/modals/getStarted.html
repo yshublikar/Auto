@@ -1,0 +1,204 @@
+<div class="modal-dialog" role="document">
+    <!-- <div class="modal-content"> -->
+    <div class="kw-modal ">
+        <button type="button" class="arcticmodal-close kw-modal-close" data-dismiss="modal"></button>
+        <header class="kw-modal-header">
+            <h3><%= headerName %></h3>
+        </header>
+        <!-- - - - - - - - - - - - - - End of Header - - - - - - - - - - - - - - - - -->
+        <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+        <div class="kw-modal-content">
+            <div id="validationAlert">
+            </div>
+            <form id="form-country_v1" name="form-country_v1">
+                <ul>
+                    <li class="row">
+                        <div class="col-xs-12">
+                            <label for="text-input-1">Name</label>
+                            <input type="text" required name="name" id="gsName">
+                        </div>
+                    </li>
+                    <!--/ .row -->
+                    <li class="row">
+                        <div class="col-xs-12">
+                            <label for="text-input-2">Email</label>
+                            <input type="email" required name="email" id="gsEmail">
+                        </div>
+                    </li>
+                    <!--/ .row -->
+                    <li class="row">
+                        <div class="col-xs-12">
+                            <label for="text-input-2">City</label>
+                            <div id="cityGs">
+                                <input class="typeahead" type="text" name="city" id="gsCity" required="" style="font-size: inherit;">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="col-xs-12">
+                            <label for="text-input-2">Service</label>
+                            <div id="gsCategory">
+                                <input class="typeahead" type="text" name="service" id="gsService" style="font-size: inherit;">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="col-xs-12">
+                            <label for="text-input-3">Phone</label>
+                            <input type="text" name="phone" id="phone1">
+                        </div>
+                    </li>
+                    <!--/ .row -->
+                </ul>
+                <button class="kw-btn-medium kw-theme-color" type="button" onclick="submitGetStarted()" id="submitBtn"></button>
+            </form>
+        </div>
+    </div>
+    <!-- </div> -->
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    // $(selector).inputmask("99-9999999"); //static mask
+    $('#phone1').inputmask({
+        "mask": "(999) 999-9999"
+    }); //specifying options
+});
+
+var categories = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    identify: function(obj) {
+        return obj.name;
+    },
+    prefetch: "<%= BASE_URL + 'prefetchServ' %>"
+});
+
+function categoriesWithDefaults(q, sync) {
+    if (q === '') {
+        sync(categories.get('Additions & Remodeling',
+            'Air Conditioning',
+            'Cabinets',
+            'Countertops',
+            'Decks',
+            'Heating & Furnace Systems',
+            'Lawn & Garden Care',
+            'Painting',
+            'Roofing',
+            'Windows',
+            'Appliances',
+            'Appraiser',
+            'Architects & Engineers',
+            'Audio-Visual & Computers',
+            'Awnings',
+            'Brick & Stone',
+            'Carpenters',
+            'Carpet & Upholstery Cleaning',
+            'Ceilings',
+            'Central Vacuum',
+            'Cleaning & Maid Services',
+            'Concrete',
+            'Countertops',
+            'Decks',
+            'Demolition Service',
+            'Designers & Decorators',
+            'Developer',
+            'Disability Services',
+            'Disaster Recovery Services',
+            'Docks',
+            'Doors',
+            'Drywall & Plaster',
+            'Electrical',
+            'Excavation',
+            'Fans',
+            'Fences',
+            'Fireplace & Wood Stoves',
+            'Flooring & Carpet',
+            'Foundations',
+            'Fountains & Ponds',
+            'Furniture Repair & Refinish',
+            'Garage & Garage Doors',
+            'Glass & Mirrors',
+            'Gutters',
+            'Handyman Services',
+            'Heating & Furnace Systems',
+            'Home Inspection',
+            'Home Maintenance',
+            'Home Security Services',
+            'Hot Tubs, Spas & Saunas',
+            'Insulation',
+            'Landscaping',
+            'Lawn & Garden Care',
+            'Locksmith',
+            'Metal Fabrication',
+            'Mold & Asbestos Services',
+            'Moving',
+            'New Home Builders',
+            'Organizers',
+            'Outdoor Playgrounds',
+            'Painting',
+            'Paving',
+            'Permit Services',
+            'Pest Control',
+            'Plumbing',
+            'Powdercoating',
+            'Power Washing',
+            'Roofing',
+            'Sandblasting Service',
+            'Senior Home Care',
+            'Septic Tanks & Wells',
+            'Sheds & Enclosures',
+            'Siding',
+            'Sign Making Service',
+            'Skylights',
+            'Snow Removal Service',
+            'Solar',
+            'Stained Glass',
+            'Swimming Pools',
+            'Tennis or Game Court',
+            'Tile',
+            'Tree Service',
+            'Wall Coverings',
+            'Waste Material Removal',
+            'Water Treatment System',
+            'Waterproofing',
+            'Window Coverings',
+            'Windows'));
+    } else {
+        categories.search(q, sync);
+    }
+}
+
+
+$('#gsCategory .typeahead').typeahead({
+    minLength: 0,
+    highlight: true
+}, {
+    name: 'category',
+    display: 'name',
+    source: categoriesWithDefaults
+});
+
+var cities = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    prefetch: "<%= BASE_URL + 'cities?forHomePage=true' %>",
+    remote: {
+        url: "<%= BASE_URL+'cities?forHomePage=true&search=' %>+%QUERY",
+        wildcard: '%QUERY'
+    }
+});
+
+$('#cityGs .typeahead').typeahead(null, {
+    name: 'city',
+    display: 'name',
+    source: cities
+});
+
+$('#gsCity').keyup(function(e) {
+    if ($(this).val() && $(this).val().split(', ')[1] != undefined) {
+        $(this)[0].setCustomValidity('');
+    } else {
+        $(this)[0].setCustomValidity('Please select city.');
+    }
+});
+</script>

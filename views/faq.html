@@ -1,0 +1,114 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-inner">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head store-banner" style="background: url(<%=((data.store && data.store.makeId && data.store.makeId.brandingImage) ? BASE_URL+data.store.makeId.brandingImage : BASE_URL)%>), url(<%=BASE_URL%>img/store-head-bg.jpg);">
+                <% include ./partials/menu-area.html %>
+                    <!-- Start: Banner Area -->
+                    <% include ./partials/faq-head.html %>
+                        <!-- Start: Banner Area -->
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- =================================================
+    Header Area End -->
+    <!-- Breadcrumb Area Start
+    ====================================================== -->
+    <section class="breadcrumb-main">
+        <div class="container">
+            <ul class="crumb">
+                <li><a href="<%=BASE_URL%>">Home</a></li>
+                <li class="active"><a href="javascript:;">Help centre</a></li>
+            </ul>
+        </div>
+    </section>
+    <!-- =================================================
+    Breadcrumb Area End -->
+    <!-- FAQ Content Area Start 
+    ====================================================== -->
+    <section class="who-we-are">
+        <div class="container clearfix">
+            <div id="faq-accordion">
+                <!-- Start: Accordion Set 1 -->
+                <%var sections=data.formattedData
+                      sections.forEach(function(section,index){%>
+                    <div class="title-accordion">
+                        <%=section.section%>
+                            <div class="plus-minus"><span class="vertical"></span><span></span></div>
+                    </div>
+                    <% if(section.categories.findIndex(x=> x.questions.length>0)!=-1){%>
+                        <div class="content-accordion">
+                            <ul class="faq-lists clearfix">
+                                <% categories = section.categories
+                               categories.forEach(function(category,index1){%>
+                                    <li style="display: <%=category.questions.length>0? 'block':'none'%>">
+                                        <div class="faq-list-single">
+                                            <div class="faq-top-cont clearfix">
+                                                <h6><%=category.category%></h6>
+                                                <% var questionCount= category.questions.length;
+                                            var questions= (questionCount>3?category.questions.splice(0,3):category.questions)%>
+                                                    <a href="<%=BASE_URL+'faq/'+section._id+'/'+category._id %>" class="green-btn-01" style="visibility: <%=questionCount>0? 'visible':'hidden'%>"> SHOW ALL <%=questionCount%> ARTICLES</a>
+                                            </div>
+                                            <ul>
+                                                <% questions.forEach(function(question,index2){%>
+                                                    <li>
+                                                        <a href="javascript:;" onclick="viewAnswer(<%=JSON.stringify(question.title)%>,<%=JSON.stringify(question.description)%>)">
+                                                            <%=question.title%>
+                                                        </a>
+                                                    </li>
+                                                    <%})%>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <%})%>
+                            </ul>
+                        </div>
+                        <%}else{%>
+                            <div class="content-accordion">
+                                <ul class="faq-lists clearfix">
+                                    <li>
+                                        <div class="faq-list-single">
+                                            <div class="faq-top-cont clearfix">
+                                                <p>No Categories found for this section</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <%}%>
+                                <%})%>
+                                    <!-- Start: Accordion Set 1 -->
+            </div>
+        </div>
+        <div id="modal-container">
+        </div>
+    </section>
+    <!-- =================================================
+    FAQ Content Area End -->
+    <!-- Footer Area Start 
+    ====================================================== -->
+    <% include ./partials/footer.html %>
+        <script type="text/javascript">
+        function viewAnswer(question, answer) {
+            html = '<div class="modal fade" id="answerModel" role="dialog">\
+                <div class="modal-dialog modal-sm">\
+                    <div class="modal-content">\
+                        <div class="modal-header">\
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>\
+                            <h5 class="modal-title">' + question + '</h5>\
+                        </div>\
+                        <form action="javascript:;">\
+                            <div class="modal-body">' + answer + '</div>\
+                             <div class="modal-footer">\
+                                <button class="green-btn-01" type="button" data-dismiss="modal">Close</button>\
+                            </div>\
+                        </form>\
+                    </div>\
+                </div>\
+            </div>';
+            $('#modal-container').html(html);
+            $('#answerModel').modal();
+        }
+        </script>

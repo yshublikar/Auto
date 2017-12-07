@@ -1,0 +1,374 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-main">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head inner-head">
+                <% include ./partials/menu-area.html %>
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- =================================================
+    Header Area End -->
+    <!-- Breadcrumb Area Start
+    ====================================================== -->
+    <section class="breadcrumb-main">
+        <div class="container">
+            <ul class="crumb">
+                <li><a href="<%=BASE_URL%>">Home</a></li>
+                <li class="active"><a href="javascript:;">Create Experience</a></li>
+            </ul>
+        </div>
+    </section>
+    <!-- =================================================
+    Breadcrumb Area End -->
+    <!-- Content Area Start
+    ====================================================== -->
+    <section class="inner-main">
+        <div class="steptab-area" id="steps-top">
+            <div id="msform">
+                <!-- Start: progressbar -->
+                <ul id="progressbar">
+                    <li class="active"><span>Step 1</span></li>
+                    <li class="active"><span><span>Step 2</span></span>
+                    </li>
+                    <li><span><span>Step 3</span></span>
+                    </li>
+                </ul>
+                <!-- End: progressbar -->
+                <div class="steptab-steps clearfix">
+                    <!-- Start: First Step -->
+                    <!-- End: First Step -->
+                    <!-- Start: Second Step -->
+                    <fieldset class="second-step">
+                        <div class="second-area">
+                            <!-- Start: Error Div -->
+                            <div class="error-main-mess" style="display:none;"><i class="fa fa-info-circle" aria-hidden="true"></i> To continue you must fill all requirement fields</div>
+                            <!-- End: Error Div -->
+                            <h4 class="text-center">Your story will help prospective customers. Thanks!</h4>
+                            <p class="text-center">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                            <!-- Start: Dealer Box -->
+                            <div class="dealer-bx clearfix">
+                                <div class="img-cont"><img src="<%=BASE_URL+data.store.logo%>" onerror="this.src='<%=BASE_URL%>img/car-ico.png'" alt=""></div>
+                                <div class="dealer-detail">
+                                    <div class="clearfix">
+                                        <div class="categor">
+                                            <%=data.store.type%>
+                                        </div>
+                                        <div class="rate-float"><img src="img/rate.jpg" alt=""> (
+                                            <%=data.count%> votes)</div>                                        
+                                    </div>
+                                    <h4><%=data.store.name%></h4>
+                                    <span class="location"><i class="fa fa-map-marker" aria-hidden="true"></i> <%=data.store.address%></span>
+                                    <span class="phone"><i class="fa fa-phone" aria-hidden="true"></i> <%=data.store.phone?data.store.phone:"Not mentioned"%></span>
+                                </div>
+                            </div>
+                            <!-- End: Dealer Box -->
+                            <form method="post" name="postFrm" id="postFrm" action="<%= BASE_URL+'create-experience/save'%>">
+                                <div class="rating-sec">
+                                    <label class="que-icon">Your Overall Rating <span class="what-is">?</span><span class="new-tootltip">Your Overall Rating</span></label>
+                                    <div class="rating-single">
+                                        <div class="ratting-div clearfix" id="overall-rating-div">
+                                            <select class="example-square" name="rating" id="overall-rating" autocomplete="off">
+                                                <option value=""></option>
+                                                <option value="1" data-html="terrible">1</option>
+                                                <option value="2" data-html="poor">2</option>
+                                                <option value="3" data-html="average">3</option>
+                                                <option value="4" data-html="very good">4</option>
+                                                <option value="5" data-html="excellent">5</option>
+                                            </select>
+                                            <div class="ratting-detail" id="overall-rating-detail"><span class="tip"></span> Click to rate</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="que-icon">Title <span class="what-is">? </span>
+                                    <span class="new-tootltip"> Title</span> </label>
+                                <input class="frm-txt-gray" name="title" placeholder="Title" type="text" id="title">
+                                <input name="makeId" id="makeId" type="hidden" value="<%=data.store._id%>">
+                                <label class="que-icon">Describe your experience <span class="what-is">? </span><span class="new-tootltip"> sdfsafasdf</span> </label>
+                                <textarea name="description" id="description" class="frm-txtarea-gray" minlength="200" placeholder="Tell about your experience (200 character minimum)"></textarea>
+                                <div class="row clearfix">
+                                    <div class="col-md-6">
+                                        <label>What sort of experience was this?</label>
+                                        <select name="exp_type" id="exp_type" class="select-ui">
+                                            <option value="">Select sort of experience</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 select-with-ico">
+                                        <label class="que-icon">When was this? <span class="what-is">?</span><span class="new-tootltip"> When was this?</span></label>
+                                        <input type="text" class="frm-txt-gray" name="postedOn" id="datepicker" placeholder="April 2017">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="que-icon">Tell us about your car <span class="what-is">?</span>
+                                            <span class="new-tootltip"> Tooltip contents goes here</span></label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="car_model" id="car_model" class="select-ui">
+                                            <option>Select Model</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="car_variant" id="car_variant" class="select-ui">
+                                            <option>Select Variant</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                    </div>
+                                    <div class="col-md-3">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-6 padding-30 ">
+                                        <input class="frm-txt-gray" name="vin" id="vin" placeholder="Vehicle Identification Number" type="text">
+                                        <input type="hidden" id="vinYear" name="year" value="">
+                                    </div>
+                                    <div class="col-md-6 padding-30" id="verifyVin">
+                                        <!--  <a class="varification-link" onclick="verifyVIN()" href="javascript:;">Verify?</a> -->
+                                        <a class="varification-link" href="javascript:;">Verify?</a>
+                                    </div>
+                                </div>
+                                <div class="continue-box test">
+                                    <input type="button" name="next" class="next green-btn-01 action-button" value="CONTINUE" />
+                                </div>
+                        </div>
+                    </fieldset>
+                    <!-- End: Second Step -->
+                    <!-- Start: Third Step -->
+                    <!-- End: Third Step -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =================================================
+    Profile Area End -->
+    <% include ./partials/footer.html %>
+        <!-- Step Form Js -->
+        <script>
+        <%if(data.userDetails&&data.city){%>
+        console.log("data of store:", data.store.type);
+        car_model();
+        exp_types();
+        /// Second Step
+
+        function exp_types() {
+            $.ajax({
+                url: BASE_URL + "getForms",
+                method: 'GET', // 'POST'
+                cache: false,
+                dataType: 'json',
+                data: { type: data.store.type },
+                headers: {},
+                success: function(response) {
+                    if (response.status === 'success') {
+                        if (response.docs.length > 0) {
+                            var options = "";
+                            options += "<option  value=''>" + "Select sort of experience" + "</option>";
+                            $.each(response.docs, function(item) {
+                                /* <option value="">Select sort of experience</option>*/
+
+                                options += "<option  value='" + response.docs[item]._id + "'>" + response.docs[item].experienceType + "</option>";
+
+                            });
+                            $('#exp_type').html(options);
+                        }
+
+                    } else {
+
+                    }
+
+                },
+                error: function(error) {
+                    $('.second-step .error-main-mess').css('display', 'block');
+                    $('.second-step .error-main-mess').text(error.message)
+                },
+                beforeSend: function() {
+
+                },
+                complete: function() {
+                    // We can make status as processing done for forms and all.
+                }
+            })
+
+        };
+
+        function car_model() {
+            // alert("in car models");
+            $.ajax({
+                url: BASE_URL + "getCarModel",
+                method: 'GET', // 'POST'
+                cache: false,
+                dataType: 'json',
+                data: {},
+                headers: {},
+                success: function(response) {
+                    if (response.status === 'success') {
+                        if (response.docs.length > 0) {
+                            var options = "";
+                            carmodels = response.docs;
+                            options += "<option  value=''>" + "Select Model" + "</option>";
+                            $.each(response.docs, function(item) {
+
+                                options += "<option  value='" + response.docs[item]._id + "'>" + response.docs[item].model + "</option>";
+
+                            });
+                            $('#car_model').html(options);
+                        }
+
+                    } else {
+
+                    }
+
+                },
+                error: function(error) {
+                    $('.second-step .error-main-mess').css('display', 'block');
+                    $('.second-step .error-main-mess').text(error.message)
+                },
+                beforeSend: function() {
+
+                },
+                complete: function() {
+                    // We can make status as processing done for forms and all.
+                }
+            })
+
+        };
+
+        function verifyVIN() {
+            if ($("#vin").val() != '') {
+                $.ajax({
+                    url: BASE_URL + "vin/" + $('#vin').val(),
+                    method: 'GET',
+                    cache: false,
+                    dataType: 'json',
+                    data: {},
+                    headers: {},
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            html = ' <a class="varification-link" onclick="verifyVIN()" href="javascript:;">Verify?</a><div class="vin-verify success">Verified</div>';
+                            $('#verifyVin').html(html)
+                            $('#vinYear').val(response.data.year);
+                        }
+
+                    },
+                    error: function(error) {
+                        html = ' <a class="varification-link" onclick="verifyVIN()" href="javascript:;">Verify?</a><div class="vin-verify error">Wrong VIN</div>';
+                        $('#verifyVin').html(html)
+                    },
+                    beforeSend: function() {
+                        html = '<a class="varification-link" href="javascript:;">Verifing <img src="<%=BASE_URL%>../img/loader.gif" height="20px" width="20px"></a>';
+                        $('#verifyVin').html(html);
+                    },
+                    complete: function() {
+
+                    }
+                })
+            }
+        }
+        $("#car_model").on("selectmenuselect", function(event, ui) {
+
+            //alert($("#car_model").val())
+            var id = $("#car_model").val();
+            var options = [];
+            if (id) {
+
+                carModel = carmodels.filter(function(a) { return a._id === id })
+                carModel = carModel[0];
+                options += "<option  value=''>" + "Select Variant" + "</option>";
+                $.each(carModel.variants, function(item) {
+
+                    options += "<option  value='" + carModel.variants[item]._id + "'>" + carModel.variants[item].name + "</option>";
+                });
+
+                $('#car_variant').html(options);
+            }
+
+        });
+
+
+        $('.continue-box .action-button').click(function(event) {
+
+            $('.second-step .error-main-mess').css('display', 'none');
+
+            if ($("#overall-rating").val() == '' || $("#title").val() == '' || $("#description").val() == '' || $("#exp_type").val() == '' || $("#datepicker").val() == '' || $("#car_model").val() == '' || $("#car_variant").val() == '' || $("#vin").val() == '') {
+                $('.second-step .error-main-mess').css('display', 'block');
+                $('.second-step .error-main-mess').text("To continue you must fill all required fields");
+                return;
+            }
+            if ($("#description").val().length < 200) {
+                $('.second-step .error-main-mess').css('display', 'block');
+                $('.second-step .error-main-mess').text("To continue you must fill 200 characters minimum in description field");
+                return;
+
+            }
+            var content = $("input#title").val() //content is now the value of the text box
+            var words = content.trim().split(/\s+/); //words is an array of words, split by space
+            var num_words = words.length; //num_words is the number of words in the array
+
+            if (num_words > 10) {
+                $('.second-step .error-main-mess').css('display', 'block');
+                $('.second-step .error-main-mess').text("You have entered more than 10 word in title field.");
+                return;
+            }
+
+            //Vin number validation
+            /*if($('#vinYear').val()==''){
+                 $('.second-step .error-main-mess').css('display', 'block');
+                $('.second-step .error-main-mess').text("To continue you must verify VIN number");
+                return;
+            }*/
+
+
+            //alert("ok");
+
+            $.ajax({
+                url: $('#postFrm').attr('action'),
+                method: 'POST', // 'POST'
+                cache: false,
+                dataType: 'json',
+                data: $('#postFrm').serialize(),
+                headers: {},
+                success: function(response) {
+                    console.log("response here:", response);
+                    var formId = response.docs.formId;
+                    var expId = response.experience.experienceId;
+                    console.log("formId: ", formId);
+                    url = BASE_URL + 'create-experience/step3/' + expId;
+                    window.location = url;
+                },
+                error: function(error) {
+                    $('.second-step .error-main-mess').css('display', 'block');
+                    $('.second-step .error-main-mess').text(error.message)
+                },
+                beforeSend: function() {
+
+                },
+                complete: function() {
+                    // We can make status as processing done for forms and all.
+                }
+            })
+
+
+
+
+
+        })
+        $("input#title").change(function(event) {
+            var content = $("input#title").val() //content is now the value of the text box
+            var words = content.trim().split(/\s+/); //words is an array of words, split by space
+            var num_words = words.length; //num_words is the number of words in the array
+
+            if (num_words > 10) {
+                $('.second-step .error-main-mess').css('display', 'block');
+                $('.second-step .error-main-mess').text("You have entered more than 10 word in title field.");
+            } else {
+                $('.second-step .error-main-mess').css('display', 'none');
+
+            }
+
+        })
+        <%} else {%>
+        $('.second-step .error-main-mess').css('display', 'block');
+        $('.second-step .error-main-mess').text("Please login using facebook and select city to post your experience");
+        <%}%>
+        </script>

@@ -1,0 +1,285 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-main">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head inner-head">
+                <% include ./partials/menu-area.html %>
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- =================================================
+    Header Area End -->
+    <!-- Breadcrumb Area Start
+    ====================================================== -->
+    <section class="breadcrumb-main">
+        <div class="container">
+            <ul class="crumb">
+                <li><a href="<%=BASE_URL%>">Home</a></li>
+                <li class="active"><a href="javascript:;">Create Experience</a></li>
+            </ul>
+        </div>
+    </section>
+    <!-- =================================================
+    Breadcrumb Area End -->
+    <!-- Content Area Start
+    ====================================================== -->
+    <section class="inner-main">
+        <div class="steptab-area" id="steps-top">
+            <div id="msform">
+                <!-- Start: progressbar -->
+                <ul id="progressbar">
+                    <li class="active"><span>Step 1</span></li>
+                    <li><span><span>Step 2</span></span>
+                    </li>
+                    <li><span><span>Step 3</span></span>
+                    </li>
+                </ul>
+                <!-- End: progressbar -->
+                <div class="steptab-steps clearfix">
+                    <form name="searchFrm" id="searchFrm" action="" method="get">
+                        <!-- <input type="text" name="name" id="name" > -->
+                        <!-- Start: First Step -->
+                        <fieldset class="first-step">
+                            <div class="error-main-mess" style="display:none;"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
+                            <h4>Create Experience for the store you visited</h4>
+                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                            <div class="search-form inner-pg">
+                                <div class="left-box">
+                                    <ul>
+                                        <li>
+                                            <label>Search</label>
+                                            <input type="text" class="dealerships-togle" id="store-search" placeholder="dealerships or workshops" autocomplete="off">
+                                            <!--   <input type="hidden"  id="storeId" name="storeId"> -->
+                                            <div class="serch-res-dealer">
+                                                <span class="toper"></span>
+                                                <ul id="store-result">
+                                                    <li><a href="<%=BASE_URL +'contact#add-store'%>"><i class="add-ico"></i> <span>Can`t find what you`re looking for?</span> Add an listing </a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <label>Near</label>
+                                            <input type="text" class="locations-togle" id="city-search" placeholder="San Francisco, CA" autocomplete="off">
+                                            <div class="serch-res-location">
+                                                <span class="toper"></span>
+                                                <ul id="city-result">
+                                                    <%data.cities.forEach(function(item){%>
+                                                        <li style="cursor: pointer;" onclick="selectCity('<%=item.name%>','<%=item._id%>')"><a><i class="pin-ico"></i><%=item.name%> <span><%=item.state%></span></a></li>
+                                                        <%})%>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="right-box">
+                                    <button type="button" name="next" class="submit-btn clearfix action-button"><span></span> Search</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <!-- End: First Step -->
+                        <!-- Start: Second Step -->
+                        <!-- End: Second Step -->
+                        <!-- Start: Third Step -->
+                        <!-- End: Third Step -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =================================================
+    Profile Area End -->
+    <% include ./partials/footer.html %>
+        <!-- Step Form Js -->
+        <script>
+        ///first step
+        <%if(data.userDetails&&data.city){%>
+        var cityModel = JSON.parse(readCookie("cityName")) || {};
+        var storeModel = {};
+        $('#city-search').val(cityModel.name);
+        $('#city-search').keyup(function() {
+            if (this.value && this.value != '') {
+                $.ajax({
+                    url: BASE_URL + "getCities?q=" + this.value,
+                    method: 'GET', // 'POST'
+                    cache: false,
+                    dataType: 'json',
+                    data: {},
+                    headers: {},
+                    success: function(response) {
+                        console.log(response)
+                        var html = "";
+                        if (response.status === 'success') {
+                            $('#city-result').html('');
+                            if (response.docs.length > 0) {
+                                $.each(response.docs, function(item) {
+                                    var data = "'" + response.docs[item].name + "','" + response.docs[item]._id + "'";
+                                     var stateName=response.docs[item].state?(response.docs[item].state +', '):'';
+                                    var countryName=response.docs[item].country?response.docs[item].country:'';
+                                    html += '<li style="cursor: pointer;" onclick="selectCity(' + data + ')"><a ><i class="pin-ico"></i>' + response.docs[item].name + '<span>' + stateName+ countryName + '</span></a></li>';
+                                })
+                            } else {
+                                html += '<li style="cursor: pointer;" onclick="selectCity(' + ' ' + ')"><a><i class="pin-ico"></i>result not found <span></span></a></li>';
+                            }
+
+                        } else {
+                            html += '<li style="cursor: pointer;" onclick="selectCity(' + ' ' + ')"><a ><i class="pin-ico"></i>result not found <span></span></a></li>';
+                        }
+
+                        if (!$(".serch-res-location").hasClass("active")) {
+                            $(".serch-res-location").addClass("active");
+                           
+                            }
+                        $('#city-result').html(html)
+                    },
+                    error: function(error) {
+                        $('.first-step .error-main-mess').text(error.message)
+
+                    },
+                    beforeSend: function() {
+
+                    },
+                    complete: function() {
+                        // We can make status as processing done for forms and all.
+                    }
+                })
+            }
+        });
+
+        $('#store-search').keyup(function() {
+            var contactUrl = BASE_URL + "contact#add-store";
+            if (this.value && this.value != '') {
+                $('.first-step .error-main-mess').css('display', 'none');
+                if (!cityModel._id) {
+                    $('.first-step .error-main-mess').css('display', 'block');
+                    $('.first-step .error-main-mess').text("Please select city");
+                    return;
+                }
+                $.ajax({
+                    url: BASE_URL + "getStores/" + cityModel._id + "?q=" + this.value,
+                    method: 'GET', // 'POST'
+                    cache: false,
+                    dataType: 'json',
+                    data: {},
+                    headers: {},
+                    success: function(response) {
+                        var html = "";
+                        if (response.status === 'success') {
+                            $('#store-result').html('');
+                            if (response.docs.length > 0) {
+                                stores = response.docs.slice(0, 3);
+
+                                $.each(stores, function(item) {
+
+                                    var data = '\"' + response.docs[item].name + "\",\"" + response.docs[item]._id + "\",\"" + response.docs[item].storeId +"\"";
+
+                                    html += '<li style="cursor: pointer;" \
+                                    onclick=\'searchStore(\"' + response.docs[item].name.replace(/[']/g,"&#39;") + '\",\"'+ 
+                                    response.docs[item]._id +'\",\"'+response.docs[item].storeId+'\")\'><a ><i class="' + ((response.docs[item].type).toLowerCase() === "dealership" ? "users-ico" : "car-ico") + '"></i>' + response.docs[item].name + '<span>' + response.docs[item].address + '</span></a></li>';
+                                     //$("#store-search").val(response.docs[item].name);
+                                })
+                            } else {
+                                html += '<li style="cursor: pointer;"><a href="' + contactUrl + '"><i class="add-ico"></i> <span>Can`t find what you`re looking for?</span> Add a listing </a></li>';
+                               // $("#store-search").val(" ");
+                            }
+
+                        } else {
+                            html += '<li style="cursor: pointer;"><a href="' + contactUrl + '"><i class="add-ico"></i> <span>Can`t find what you`re looking for?</span> Add a listing </a></li>';
+                            // $("#store-search").val(" ");
+                        }
+
+                        if (!$(".serch-res-dealer").hasClass("active")) {
+                            $(".serch-res-dealer").addClass("active");
+                           
+                            }
+                        $('#store-result').html(html)
+                    },
+                    error: function(error) {
+                        $('.second-step .error-main-mess').css('display', 'block');
+                        $('.second-step .error-main-mess').text(error.message)
+                    },
+                    beforeSend: function() {
+
+                    },
+                    complete: function() {
+                        // We can make status as processing done for forms and all.
+                    }
+                })
+            }
+        });
+
+
+        function selectStore(index) {
+            storeModel = stores[index];
+            // console.log("storeModel: ",storeModel);
+            $('#store-search').val(storeModel.name);
+            $('.first-step').css('display', 'none');
+            $('.second-step').css('display', 'block');
+            $($('#progressbar').find('li')[1]).addClass('active');
+
+            $($('.dealer-bx').find('img')[0]).attr("src", BASE_URL + storeModel.logo);;
+            $('.dealer-bx .categor').text(storeModel.type);
+            $($('.dealer-bx').find('h4')[0]).text(storeModel.name);
+            $('.dealer-bx .phone').text(storeModel.phone);
+            exp_types();
+            car_model();
+
+        }
+
+        function searchStore(store,id,storeId) {
+
+           
+             if (store != '' && id && id != '') {
+                storeModel.name = store;
+                storeModel._id = id;
+                storeModel.storeId = storeId;
+                $('#store-search').val(store);
+            } else {
+                storeModel.name = undefined;
+                storeModel._id = undefined;
+                storeModel.storeId = storeId;
+            }
+
+           // $('#searchFrm').attr('action', BASE_URL + 'create-experience/step2/' + id);
+           // $('#searchFrm').submit();
+
+
+
+        }
+
+        function selectCity(city, id) {
+            if (city != '' && id && id != '') {
+                cityModel.city = city;
+                cityModel._id = id;
+                $('#city-search').val(city);
+            } else {
+                cityModel.city = undefined;
+                cityModel._id = undefined;
+            }
+        }
+
+        $('.right-box .submit-btn').click(function(event) {
+            $('.first-step .error-main-mess').css('display', 'none');
+            event.preventDefault();
+            if (!cityModel.city && !cityModel._id) {
+                $('.first-step .error-main-mess').css('display', 'block');
+                $('.first-step .error-main-mess').text("Please select city");
+                return;
+
+            }
+            if (!storeModel.name && !storeModel._id) {
+                $('.first-step .error-main-mess').css('display', 'block');
+                $('.first-step .error-main-mess').text("Please select store");
+                return;
+            }
+            //console.log("storeModel.storeId####################",storeModel.storeId);
+            $('#searchFrm').attr('action', BASE_URL + 'create-experience/step2/' + storeModel.storeId);
+            $('#searchFrm').submit();
+
+        })
+        <%} else {%>
+        $('.first-step .error-main-mess').css('display', 'block');
+        $('.first-step .error-main-mess').text("Please login using facebook and select city to post your experience");
+        <%}%>
+        </script> 

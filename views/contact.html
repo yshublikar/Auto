@@ -1,0 +1,283 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-main">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head inner-head">
+                <% include ./partials/menu-area.html %>
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- =================================================
+    Header Area End -->
+    <!-- Breadcrumb Area Start
+    ====================================================== -->
+    <section class="breadcrumb-main">
+        <div class="container">
+            <ul class="crumb">
+                <li><a href="<%=BASE_URL%>">Home</a></li>
+                <li class="active"><a href="javascript:;">Contact Us</a></li>
+            </ul>
+        </div>
+    </section>
+    <!-- =================================================
+    Breadcrumb Area End -->
+    <!-- Profile Area Start
+    ====================================================== -->
+    <section class="prifile-main" id="profile-tabs">
+        <!-- Start: Top Links -->
+        <div class="container">
+            <ul class="profile-links">
+                <li><a href="#send-message"><i class="fa fa-envelope" aria-hidden="true"></i> Send Message</a></li>
+                <li><a href="#add-store" id="store">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Add New Store</a></li>
+                <li><a href="#reach"><i class="fa fa-share-alt" aria-hidden="true"></i> Reach</a></li>
+            </ul>
+        </div>
+        <!-- End: Top Links -->
+        <!-- Start: Sent Message -->
+        <div id="send-message">
+            <div class="container contact-container">
+                <div style="color: #1bc744;">
+                    <%=messages.info%>
+                </div>
+                <h4>Send Your Message</h4>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                <form method="post" name="contactFrm" id="contactFrm" action="<%= BASE_URL+'informAdmin'%>">
+                    <div class="recomment-radio">
+                        <label>Subject:</label>
+                        <label for="radio-1">Complements</label>
+                        <input type="radio" checked name="subject" id="radio-1" class="ui-checkboxs" required value="Complements">
+                        <label for="radio-2">Suggestions</label>
+                        <input type="radio" name="subject" id="radio-2" class="ui-checkboxs" value="Suggestions" required>
+                        <label for="radio-3">Others</label>
+                        <input type="radio" name="subject" id="radio-3" class="ui-checkboxs" value="Others" required>
+                    </div>
+                    <div class="row contaxt-txt-fields clearfix">
+                        <div class="col-md-6">
+                            <label>Name:</label>
+                            <input class="frm-txt-gray" name="name" placeholder="Your name" type="text" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Email:</label>
+                            <input class="frm-txt-gray" name="email" placeholder="Your Email" type="email" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label>Message:</label>
+                            <textarea class="frm-txtarea-gray" name="message" placeholder="" required></textarea>
+                        </div>
+                    </div>
+                    <div class="agree-btn">
+                        <button type="submit" name="" class="green-btn-01"><i class="fa fa-paper-plane" aria-hidden="true"></i> SUBMIT</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Start: Sent Message -->
+        <!-- Start: Add New Store -->
+        <div id="add-store">
+            <div class="container contact-container">
+                <div class="add-store-message" style="display:none;color:#1bc744;"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
+                <h4>Add New Store</h4>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                <div class="recomment-radio">
+                    <label>Store type:</label>
+                    <label for="radio-4">Dealership</label>
+                    <input type="radio" name="radio-4" id="radio-4" value="Dealership" class="ui-checkboxs">
+                    <label for="radio-5">Workshop/Service Center</label>
+                    <input type="radio" checked name="radio-4" id="radio-5" value="Workshop" class="ui-checkboxs">
+                </div>
+                <div class="contacts-map">
+                    <div class="map-search-area clearfix">
+                        <input class="frm-search-gray" name="" id="pac-input" placeholder="Search location..." type="text">
+                        <button type="button" name="" class="green-btn-01"><i class="fa fa-search" aria-hidden="true"></i> Add my location</button>
+                    </div>
+                    <div class="cont-map-area">
+                        <!--   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d39399.928998628886!2d-73.92086154649269!3d40.932705104390145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2c0080943afa1%3A0xbe967384a4d8daa2!2sYonkers%2C+NY%2C+USA!5e0!3m2!1sen!2sin!4v1502694932495" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe> -->
+                        <div id="map-frame">
+                            <div id="map_canvas" class="mapping map-frame" style="height: 300px"></div>
+                        </div>
+                    </div>
+                    <!-- <div id="map"></div> -->
+                </div>
+                <div class="agree-btn">
+                    <button type="button" id="add-store-btn" name="" class="green-btn-01"><i class="fa fa-paper-plane" aria-hidden="true"></i>SUBMIT</button>
+                </div>
+            </div>
+        </div>
+        <!-- Start: Add New Store -->
+        <!-- Start: Reach -->
+        <div id="reach">
+            <div class="container contact-container">
+                <h4>Let's Talk!</h4>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. </p>
+                <p>It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli. The Big Oxmox advised her not to do so, because there were thousands of bad Commas.</p>
+                <div class="row contact-detail clearfix">
+                    <div class="col-md-4">
+                        <div class="ico-cont-contact"><img src="img/contact-ico-01.png" alt=""></div>
+                        <span>Email</span>
+                        <a href="#">mail@simplemail.com</a>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="ico-cont-contact"><img src="img/contact-ico-02.png" alt=""></div>
+                        <span>phone</span> +1 212-226-3126
+                    </div>
+                    <div class="col-md-4">
+                        <div class="ico-cont-contact"><img src="img/contact-ico-03.png" alt=""></div>
+                        <span>address</span> 640 N La Salle Dr
+                        <br>Chicago DL 60654
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Start: Reach -->
+    </section>
+    <!-- =================================================
+    Profile Area End -->
+    <% include ./partials/footer.html %>
+        <script>
+        var place = {};
+
+        function initAutocomplete() {
+            var map = new google.maps.Map(document.getElementById('map_canvas'), {
+                center: { lat: -33.8688, lng: 151.2195 },
+                zoom: 11,
+                mapTypeId: 'roadmap'
+            });
+
+            // Create the search box and link it to the UI element.
+            var input = document.getElementById('pac-input');
+            var searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            var markers = [];
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener('places_changed', function() {
+                var places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+                // Clear out the old markers.
+                markers.forEach(function(marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+
+                // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                place = places[0];
+                if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                }
+                console.log("place", place)
+                var icon = { url: place.icon, size: new google.maps.Size(71, 71), origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(17, 34), scaledSize: new google.maps.Size(25, 25) };
+
+                // Create a marker for each place.
+                markers.push(new google.maps.Marker({
+                    map: map,
+                    icon: icon,
+                    title: place.name,
+                    position: place.geometry.location
+                }));
+
+                if (place.geometry.viewport) {
+                    // Only geocodes have viewport.
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+
+                map.fitBounds(bounds);
+            });
+        }
+        $(document).ready(function() {
+            // This example adds a search box to a map, using the Google Place Autocomplete
+            // feature. People can enter geographical searches. The search box will return a
+            // pick list containing a mix of places and predicted search terms.
+
+            // This example requires the Places library. Include the libraries=places
+            // parameter when you first load the API. For example:
+            // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+
+
+            loadMap()
+
+            $('#store').click(function() {
+                loadMap()
+            })
+            var script = null;
+
+            function loadMap() {
+                function isMyScriptLoaded(url) {
+                    if (!url) url = "http://maps.googleapis.com/maps/api/js?key=AIzaSyDce6BCZFCm61_Su2O1HbA-DqE4qf7V4rE&libraries=places&callback=initAutocomplete";
+                    var scripts = document.getElementsByTagName('script');
+                    for (var i = scripts.length; i--;) {
+                        if (scripts[i].src == url) return true;
+                    }
+                    return false;
+                }
+
+                if ($('#add-store').attr('aria-hidden') === "false" && !isMyScriptLoaded()) {
+                    // console.log()
+                    script = document.createElement('script');
+                    script.src = "//maps.googleapis.com/maps/api/js?key=AIzaSyDce6BCZFCm61_Su2O1HbA-DqE4qf7V4rE&libraries=places&callback=initAutocomplete";
+                    document.body.appendChild(script);
+                }
+            }
+
+            $('#add-store-btn').click(function() {
+                if (!place.place_id) {
+                    alert("Please select place to proceed");
+                    return;
+                }
+                // delete place.geometry.location;
+                // delete place.geometry.location;
+                place.type = $('input[name=radio-4]:checked').val()
+                $('#add-store-btn').text("Proceesing...");
+                $('#add-store-btn').attr('disabled', false)
+                $.ajax({
+                    url: BASE_URL + "addStore",
+                    method: 'POST', // 'POST'
+                    cache: false,
+                    dataType: 'json',
+                    data: JSON.parse(JSON.stringify(place)),
+                    headers: {},
+                    success: function(response, status) { // Succesfull response status
+                        console.log("response", response);
+                        if (response.status === "success") {
+                            $('.add-store-message').css('display', 'block');
+                            $('.add-store-message').text(response.message)
+                            $('#add-store-btn').text("Submit");
+                            $('#add-store-btn').attr('disabled', false)
+                        }
+                    },
+                    error: function(error) {
+                        // Error state of response
+                        console.log("------ Error: ", error);
+                        $('.add-store-message').css('display', 'block');
+                        $('.add-store-message').text(error.message)
+                        $('#add-store-btn').text("Submit");
+                        $('#add-store-btn').attr('disabled', false)
+                    },
+                    beforeSend: function() {
+
+
+                    },
+                    complete: function() {
+                        // We can make status as processing done for forms and all.
+                    }
+                })
+            })
+        })
+        </script>
+        <!-- <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyDce6BCZFCm61_Su2O1HbA-DqE4qf7V4rE&libraries=places&callback=initAutocomplete"></script> -->

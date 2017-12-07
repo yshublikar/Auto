@@ -1,0 +1,27 @@
+<div class="menu-area">
+    <div class="container clearfix">
+        <div class="logo-area clearfix"><a href="<%=BASE_URL %>"><img src="<%=BASE_URL%>img/logo.png"></a><a class="toggle-btn"><i class="fa fa-bars" aria-hidden="true"></i></a></div>
+        <div class="main-menu">
+            <ul class="menu">
+                <li ><!-- class="<%= data.activeMenu == 'home'?'active':''%>"> -->
+                    <a href="<%= BASE_URL %>">Home</a>
+                </li>
+                <li> <!-- class="<%= data.activeMenu == 'compare'?'active':''%>"> -->
+                    <a href="<%= BASE_URL+'compare' %>">compare</a>
+                </li>
+               <!--  <li class="<%= data.activeMenu == 'show-report-car'?'active':''%>">
+                    <a href="<%= BASE_URL+'' %>">show report car</a>
+                </li>
+                <li class="<%= data.activeMenu == 'check-vin'?'active':''%>">
+                    <a href="<%= BASE_URL+'' %>">check vin</a>
+                </li>
+                <li class="<%= data.activeMenu == 'blog'?'active':''%>">
+                    <a href="<%= BASE_URL+'' %>">Blog</a>
+                </li> -->
+            </ul>
+        </div>
+        <!-- <div class="large-btn"><a href="<%= BASE_URL+'create-experience' %>" class="button-big"><img src="img/edit-ico.png" alt=""> post your experience</a></div> -->
+        <div class="large-btn"><a onclick="gotoWriteExperience()" href="javascript:;" class="button-big"><img src="<%=BASE_URL%>img/edit-ico.png" alt=""> post your experience</a></div>
+
+    </div>
+</div>

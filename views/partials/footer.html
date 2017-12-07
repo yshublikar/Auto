@@ -1,0 +1,127 @@
+<!-- Footer Area Start 
+    ====================================================== -->
+<footer class="footer-main">
+    <div class="container">
+        <!-- Start: Footer Top Area -->
+        <div class="footer-top clearfix">
+            <!-- <div class="search-cont clearfix">
+                <form name="">
+                    <input type="text" placeholder="Enter Condition or Make">
+                    <button type="submit" class="search-btn"></button>
+                </form>
+            </div> -->
+            <div class="footer-menu">
+                <ul>
+                    <li><a href="<%=BASE_URL+'faq'%>">Help</a></li>
+                    <li><a href="<%=BASE_URL+'about-us'%>">About Us</a></li>
+                    <li><a href="<%=BASE_URL+'contact'%>">Contact Us</a></li>
+                    <li><a href="<%=BASE_URL+'contact'%>">Terms & Condition </a></li>
+                    <li><a href="<%=BASE_URL+'privacy-policy'%>">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- End: Footer Top Area -->
+        <!-- Start: Footer Bottom Area -->
+        <div class="footer-bottom clearfix">
+            <div class="copy-right">
+                <p>&copy; 2017  <a target="_blank" href="www.automobile.brandlabel.net/in"> BrandLabel Tech Private Limited </a> | Trademarks and brands are the property of their respective owners.</p>
+            </div>
+            <div class="footer-social">
+                <ul>
+                    <li><a href="https://www.facebook.com/BrandLabelHQ/ "><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="https://twitter.com/BrandLabelHQ"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="https://www.youtube.com/channel/UC2BOAsxU1Mj7d_5hVDjhrSA"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                   <!--  <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li> -->
+                </ul>
+            </div>
+        </div>
+        <!-- End: Footer Bottom Area -->
+    </div>
+</footer>
+<!-- =================================================
+    Footer Area End -->
+<div id="overlayDivSelection"></div>
+</div>
+<script type="text/javascript" src="<%=BASE_URL+'js/jquery-1.11.1.min.js'%>"></script>
+<!-- jquery -->
+<script type="text/javascript" src="<%=BASE_URL+'js/bootstrap.js'%>"></script>
+<!-- Bootstrap Js -->
+<script type="text/javascript" src="<%=BASE_URL+'js/jquery.flexslider.js'%>"></script>
+<!-- Flexslider Js -->
+<script type="text/javascript" src="<%=BASE_URL+'js/flexslider-settings.js'%>"></script>
+<!-- Flexslider Settings Js -->
+<script type="text/javascript" src="<%=BASE_URL+'js/retina.min.js'%>"></script>
+<!-- Retina Js -->
+<script type="text/javascript" src="<%=BASE_URL+'js/jquery.counterup.min.js'%>"></script>
+<!-- Counter Js -->
+<script type="text/javascript" src="<%=BASE_URL+'js/waypoints.min.js'%>"></script>
+<!-- Counter Js -->
+<script type="text/javascript" src="<%=BASE_URL+'js/owl.carousel.js'%>"></script>
+<!-- Owl carousel Js -->
+<script type="text/javascript" src="<%=BASE_URL+'js/owl-carousel-settings.js'%>"></script>
+<!-- Owl carousel Js -->
+<script type="text/javascript" src="<%=BASE_URL+'js/jquery-ui.js'%>"></script>
+<!-- UI Js -->
+<script type="text/javascript" src="<%=BASE_URL+'js/jquery-ui-settings.js'%>"></script>
+<!-- UI Settings Js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+    
+<!-- Linkify -->
+<script src="<%=BASE_URL+'js/linkifyjs/linkify.min.js'%>"></script>
+<script src="<%=BASE_URL+'js/linkifyjs/linkify-jquery.min.js'%>"></script>
+<!-- Linkify -->
+
+<!-- start slectize include files -->
+<script src="<%=BASE_URL+'selectize/js/selectize.jquery.js'%>"></script>
+<script type="text/javascript" src="<%=BASE_URL+'js/moment.js'%>"></script>
+<!-- UI Js -->
+<script type="text/javascript" src="<%=BASE_URL+'js/moment_timezone.js'%>"></script>
+<!-- UI Js -->
+<script type="text/javascript" src="<%=BASE_URL+'js/moment.timezone_with_data.js'%>"></script>
+<!-- UI Js -->
+<script type="text/javascript" src="<%=BASE_URL%>eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<!-- end slectize include files -->
+<script>
+var currentRating = 1; // This is to keep initial rating. If it is not there error comes in executing javascript.
+</script>
+<%if (data.page == 'store-listing') { %>
+    <script type="text/javascript" src="<%=BASE_URL%>js/bootstrap-slider.js"></script>
+    <!-- SlideBar Js -->
+    <script src="<%= BASE_URL + 'scripts/store-listing.js'%>" type="text/javascript" charset="utf-8"></script>
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyDce6BCZFCm61_Su2O1HbA-DqE4qf7V4rE&sensor=false&callback=initialize"></script>
+    <% } %>
+        <%if (data.page == 'store-details') { %>
+            <script src="<%= BASE_URL + 'scripts/store-details.js'%>" type="text/javascript" charset="utf-8"></script>
+            <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBnFwrCdwnjyNrFuPV_IXP31CkcW_6hPjE&sensor=false&callback=initialize"></script>
+            <% } %>
+                <script type="text/javascript" src="<%=BASE_URL+'js/rating.js'%>"></script>
+                <!-- Bar Rating Js -->
+                <script type="text/javascript" src="<%=BASE_URL+'js/jquery.barrating.js'%>"></script>
+                <!-- Bar Rating Js -->
+                <script type="text/javascript" src="<%=BASE_URL+'js/settings.js'%>"></script>
+                <!-- Settings Js -->
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/js/jquery.tooltipster.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
+                <!-- Start : Custom scripts -->
+                <script src="<%= BASE_URL + 'scripts/common.js'%>" type="text/javascript" charset="utf-8"></script>
+                <% if(data.page == 'search') { %>
+                    <script src="<%= BASE_URL + 'scripts/search.js'%>" type="text/javascript" charset="utf-8"></script>
+                    <% } %>
+                        <% if(data.page == 'home') { %>
+                            <script src="<%= BASE_URL + 'scripts/search.js'%>" type="text/javascript" charset="utf-8"></script>
+                            <% } %>
+                                <% if(data.page == 'profile') { %>
+                                    <script src="<%= BASE_URL + 'scripts/profile.js'%>" type="text/javascript" charset="utf-8"></script>
+                                    <% } %>
+                                        <% if(data.page == 'experience-details') { %>
+                                            <script src="<%= BASE_URL + 'scripts/experience-details.js'%>" type="text/javascript" charset="utf-8"></script>
+                                            <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBnFwrCdwnjyNrFuPV_IXP31CkcW_6hPjE&sensor=false&callback=initialize"></script>
+                                            <% } %>
+                                                <!-- <% if(data.page == 'Contact') { %>
+<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyDce6BCZFCm61_Su2O1HbA-DqE4qf7V4rE&libraries=places&callback=initAutocomplete"></script>
+<% } %> -->
+                                                <!-- document.write("<script type='text/javascript' src='"+ script + "'></script>"); -->
+                                                <!-- End : Custom scripts -->
+                                                </body>
+
+                                                </html>

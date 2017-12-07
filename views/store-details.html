@@ -1,0 +1,709 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-inner">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head store-banner" style="background: url(<%=((data.store && data.store.makeId && data.store.makeId.brandingImage) ? BASE_URL+data.store.makeId.brandingImage : BASE_URL)%>), url(<%=BASE_URL%>img/store-head-bg.jpg);">
+                <% include ./partials/menu-area.html %>
+                    <!-- Start: Banner Area -->
+                    <div class="banner-main">
+                        <div class="container">
+                            <h1><%=data.store.name%></h1>
+                            <hr>
+                            <p>
+                                <%=data.store.shortDescription%>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Start: Banner Area -->
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- =================================================
+    Header Area End -->
+    <!-- Navigation Area Start
+    ====================================================== -->
+    <section class="store-nav for-store-detail">
+        <div class="floated-store detailed-store">
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-8">
+                        <a class="more-links">More <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                        <ul class="store-navigation">
+                            <li class="active"><a href="#overview"><span class="store-meter"></span>Overview</a></li>
+                            <%if(data.store.makeId && data.store.makeId.offers && data.store.makeId.offers.length > 0 ){%>
+                                <li><a href="#offers"><span class="store-car"></span>offers</a></li>
+                                <%}%>
+                                    <li><a href="#infolytics"><span class="store-graph"></span>infolytics</a></li>
+                                    <li><a href="#createexperiences"><span class="store-comment"></span>Customer experiences</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 btn-cont">
+                        <a onclick="gotoWriteExperience()" href="javascript:;" class="button-big">WRITE AN EXPERIENCE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =================================================
+    Navigation Area End -->
+    <!-- Overview Area Start
+    ====================================================== -->
+    <!-- <section class="store-overview" id="overview">
+        <div id="meter" class="container">
+            <img class="imgA1" src="<%=BASE_URL%>img/ratings-dial-pointer.png" alt="">
+            <img class="imgB1" src="<%=BASE_URL%>img/meter-bar.png" alt="">
+        </div>
+    </section>
+
+    <style>
+        #meter {
+            width: 100px;
+            border-radius: 50%;
+            height: 100px;
+            background-color: red;
+        }
+        .container { position:relative; }
+        .imgA1 { position:absolute; z-index: 1; } 
+        .imgB1 { position:absolute; z-index: 3; } 
+    </style> -->
+    <!-- ====================================================== -->
+    <section class="store-overview" id="overview">
+        <div class="container">
+            <h3>Overview</h3>
+            <div class="map-sec clearfix">
+                <!-- Start: Company -->
+                <div class="colpany-sec h-380">
+                    <img height="110" src="<%=BASE_URL + data.store.logo%>" alt="" onerror="this.src='<%=BASE_URL%>img/store-default-ico.png'">
+                    <h5><%=data.store.name%></h5>
+                    <p>Make: <span><%=(data.store.makeId ? data.store.makeId.name : 'Not Available')%></span></p>
+                    <div class="rating-cont">
+                        <ul class="start-rating">
+                            <% for(var i=1; i<=5; i++) {
+                            %>
+                                <li <%if (Math.round(data.store.overallRating)>= i){%> class="active"
+                                    <%}%> ><a href="javascript:;"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                <% } %>
+                        </ul>
+                        <span>(<%=data.count%> votes)</span>
+                    </div>
+                    <div class="contact-btn">
+                        <a href="javascript:;" onclick="addToCompare('<%=data.store._id%>')" class="green-btn-01">COMPARE</a>
+                    </div>
+                </div>
+                <!-- Start: Company -->
+                <!-- Start: Address and Map -->
+                <div class="address-map">
+                    <div class="address-sec">
+                        <p>
+                            <span><i class="fa fa-phone" aria-hidden="true"></i> Phone</span>
+                            <%=data.store.phone?data.store.phone:"Not available"%>
+                        </p>
+                        <p class="w-40">
+                            <span><i class="fa fa-map-marker" aria-hidden="true"></i> Address</span>
+                            <%=data.store.address%>
+                        </p>
+                        <p>
+                            <span><i class="fa fa-envelope" aria-hidden="true"></i> Email</span>
+                            <%=data.store.email?data.store.email:"Not mentioned"%>
+                        </p>
+                        <p>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i> working hours</span>
+                            <%=(!(data.workingHours && data.workingHours.length > 0)?'Not mentioned':'')%>
+                                <%
+                             var c=1;
+                             data.workingHours.forEach(function(item)
+                             {
+                                 var m=1;%>
+                                    <%=(data.workingHours.length==1 &&  item._id.start==0)?"Not mentioned":""%>
+                                        <% item.workingHours.forEach(function(dayRow)
+                                 {
+                                     if(dayRow.closed==false)
+                                     {
+                                        if(item._id.start && (m==item.workingHours.length ||  m==1))
+                                            {
+                                    %>
+                                            <%=dayRow.day?dayRow.day:"Not mentioned"%>
+                                                <%= (m!= item.workingHours.length) ? ' - ' : '' %>
+                                                    <%
+                                        }
+                                                     m++;
+                                                          
+                                       }
+                                       
+                                })
+                                if(item._id.start && item._id.closed==false){
+                                    %>
+                                                        :
+                                                        <%=item._id.start%>:00 -
+                                                            <%=item._id.end%>:00
+                                                                <%}
+                                if(item._id.start && (c< data.workingHours.length))
+                                  {
+                                %>
+                                                                    <br>
+                                                                    <% }
+                                     c++ 
+                            })%>
+                        </p>
+                        <%if(data.store.website){%>
+                            <p><a href="<%=data.store.website%>" class="view-web" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> View website</a></p>
+                            <%}%>
+                    </div>
+                    <div class="map-sec details-page-map" style='padding-left: 28em;'>
+                        <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9328.105669694382!2d-74.01133887902597!3d40.71220226147879!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sin!4v1502259581748" frameborder="0" style="border:0" allowfullscreen></iframe> -->
+                        <!-- <div id="map"></div> -->
+                        <div id="map-frame" class="h-380">
+                            <div id="map_canvas" class="mapping map-frame h-100-p"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Start: Address and Map -->
+            </div>
+        </div>
+    </section>
+    <!-- =================================================
+    Overview Area End -->
+    <!-- Offer Area Start 
+    ====================================================== -->
+    <section class="store-offer-main" id="offers" style="display: <%= (data.store.makeId && data.store.makeId.offers && data.store.makeId.offers.length > 0 ? 'block': 'none')%>">
+        <div class="container">
+            <h3>Offers</h3>
+            <!-- Start: No Offer -->
+            <div class="no-offer" style="display:none;">Unfortunately Joe Perillo BMW, Inc.
+                <br>has no offers yet.</div>
+            <!-- End: No Offer -->
+            <!-- Start: Offer All -->
+            <div class="offer-all">
+                <div class="owl-carousel" id="offer-slider">
+                    <!-- Start: Team 01 -->
+                    <% var offers=(data.store.makeId && data.store.makeId.offers ? data.store.makeId.offers: []);
+                    offers.forEach(function(item){%>
+                        <div class="item">
+                            <div class="offer-single">
+                                <div class="img-offer">
+                                    <img src="<%=BASE_URL+item.image%>" onerror="this.src='<%=BASE_URL%>img/car-pop.jpg'" alt="">
+                                    <span class="arrow"></span>
+                                </div>
+                                <div class="cont-offer">
+                                    <h5 class="truncate"><%=item.title%></h5>
+                                    <p style="min-height: 100px;" class="linkify">
+                                        <%=(item.shortDescription&&item.shortDescription.length>100)?item.shortDescription.slice(0,100)+"...":item.shortDescription;%>
+                                    </p>
+                                    <a href="javascript:;" class="learn-more-link cus-popup" onclick="getOffer('<%=data.store.makeId._id%>','<%=item._id%>')">Read Details<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <%  
+                    })
+                    %>
+                </div>
+            </div>
+            <!-- End: Offer All -->
+            <!-- Start: Offer Popup -->
+            <div class="offer-pop">
+                <div class="popup-content">
+                    <div class="close-pop"><a href="#" class="close-popup">
+                    <img src="<%=BASE_URL%>img/close-large-ico.png" alt=""></a>
+                    </div>
+                    <div id="load-content"></div>
+                </div>
+            </div>
+            <!-- End: Offer Popup -->
+        </div>
+    </section>
+    <!-- =================================================
+    Offer Area End -->
+    <!-- Infolytics Area Start 
+    ====================================================== -->
+    <section class="infolytics-main" id="infolytics">
+        <div class="container">
+            <div class="infolytics-head clearfix">
+                <h3>Infolytics</h3>
+                <!--    <div class="slide-btn">
+                    Advanced:
+                    <label class="switch" data-toggle="tooltip" style="pointer-events: none" data-placement="bottom" title="" data-original-title="Tooltip contents goes here">
+                        <input type="checkbox" disabled="true" class="togg-input">
+                        <span class="switcher round"></span>
+                    </label>
+                </div> -->
+            </div>
+            <div class="graph-section clearfix">
+                <!-- Start: Graph left -->
+                <div class="graph-left">
+                    <!-- Start: Rating Meter -->
+                    <div class="custrating-single">
+                        <div class="meeter-cont">
+                            <div class="meter-all">
+                                <!-- Start: Meter Dial -->
+                                <div class="meter-main">
+                                    <div class="meter-dial-pointer">
+                                        <!-- <img id="pointer" src="<%=BASE_URL+'img/ratings-dial-pointer.png'%>" alt=""> -->
+                                    </div>
+                                    <img id="meter-dial" src="<%=BASE_URL%>img/meter-bar.png" onerror="this.src='<%=BASE_URL%>img/meter-bar.png'" class="meter-dial" alt="">
+                                </div>
+                                <!-- End: Meter Dial -->
+                                <div class="mtr-reccomented"><span> 0 <i> %</i></span>recommended</div>
+                                <div class="mtr-rating">Rating
+                                    <ul class="mt-ratings">
+                                        <li class="active"><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                        <li class="active"><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                        <li class="active"><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                        <li class="active"><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rate-detail">
+                            <ul class="rate-list clearfix">
+                                <!-- <li>
+                                    <div class="rate-list-detail clearfix">
+                                        <div class="title">Amenities</div>
+                                        <div class="percentage">86%</div>
+                                        <div class="progress-vis">
+                                            <div class="progress green">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100" style="width:86%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="rate-list-detail clearfix">
+                                        <div class="title">Integrity</div>
+                                        <div class="percentage">74%</div>
+                                        <div class="progress-vis">
+                                            <div class="progress yellow">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="74" aria-valuemin="0" aria-valuemax="100" style="width:74%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="rate-list-detail clearfix">
+                                        <div class="title">Quality of Work</div>
+                                        <div class="percentage">98%</div>
+                                        <div class="progress-vis">
+                                            <div class="progress red">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100" style="width:98%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="rate-list-detail clearfix">
+                                        <div class="title">Customer Service</div>
+                                        <div class="percentage">90%</div>
+                                        <div class="progress-vis">
+                                            <div class="progress blue">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:90%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End: Rating Meter -->
+                    <!-- Start: Advanced Filter -->
+                    <div class="advanced-filter" style="display:none;">
+                        <label>Specific information :</label>
+                        <p>
+                            <select name="" class="select-ui">
+                                <option>Select Query</option>
+                                <option>Query 1</option>
+                            </select>
+                        </p>
+                        <p>
+                            <select name="" class="select-ui">
+                                <option>Select Data</option>
+                                <option>Data 1</option>
+                            </select>
+                        </p>
+                        <ul class="graph-type">
+                            <li class="active"><a href="#" class="graph-type-1"><span></span></a></li>
+                            <li><a href="#" class="graph-type-2"><span></span></a></li>
+                            <li><a href="#" class="graph-type-3"><span></span></a></li>
+                        </ul>
+                    </div>
+                    <!-- End: Advanced Filter -->
+                </div>
+                <!-- End: Graph left -->
+                <!-- Start: Graph Right -->
+                <div class="graph-right">
+                    <div class="grath-top">
+                        <h5>Statistics by <span id="statistic-message" style="color:black">2017</span> <span class="what-is" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip contents goes here">?</span></h5>
+                        <div class="line-detail">
+                            <!-- <div class="line-dis"><span class="line-blue"></span> Line 1</div> -->
+                            <div class="line-dis"><span class="line-red"></span> % of rating</div>
+                        </div>
+                    </div>
+                    <div class="graph-cont">
+                        <!-- <img src="<%=BASE_URL%>img/graph.jpg" alt=""> -->
+                        <canvas id="myChart" width="400"></canvas>
+                    </div>
+                </div>
+                <!-- End: Graph Right -->
+            </div>
+        </div>
+    </section>
+    <!-- =================================================
+    Infolytics Area End -->
+    <!-- Customer Experiences Area Start 
+    ====================================================== -->
+    <section class="customer-experience" id="createexperiences">
+        <div class="container">
+            <h3>Customer Experiences</h3>
+            <div class="activity-tab-area" id="activity-tabs">
+                <ul class="activity-links">
+                    <li onclick="filterExp('New')"><a href='javascript:;'>New</a></li>
+                    <li onclick="filterExp('Trending')"><a href='javascript:;'>Trending</a></li>
+                    <!--   <li onclick="filterExp('Activity')"><a href='javascript:;'>Activity</a></li> -->
+                    <li onclick="filterExp('Worst')"><a href='javascript:;'>Worst</a></li>
+                    <li onclick="filterExp('Best')"><a href='javascript:;'>Best</a></li>
+                </ul>
+                <!-- Start: All Experience -->
+                <div id="all-experience">
+                    <ul class="experience-result-list">
+                    </ul>
+                    <!-- Start: pagination -->
+                    <div class="pagination-01">
+                        <ul class="pagination">
+                        </ul>
+                    </div>
+                    <!-- End: pagination -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- <div id="popover-content" class="hide">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <p style="color: #4e4e4e">Share </p>
+                <input class="headerSearch search-query" id="str" class="asdfasfasdf" name="str" size="40" type="text"  />
+                <br/>
+                <br/>
+                <div id="share-icons">
+                    <a href="https://www.facebook.com/sharer.php?u=<%=BASE_URL+'store/'+data.store.vanityUrl+'/'+data.store.cityId.name+'/'+data.store.storeId%>" target="_blank"><i class="fa fa-facebook"  aria-hidden="true" style="color: #3b5998"></i></a>
+                    <a href="https://twitter.com/share/?via=<%=BASE_URL%>&url=<%=BASE_URL+'store/'+data.store.vanityUrl+'/'+data.store.cityId.name+'/'+data.store.storeId%>" target="_blank"><i class="fa fa-twitter" aria-hidden="true" style="color: #0084b4"></i></a>
+                    <a href="https://plus.google.com/share?url=<%=BASE_URL+'store/'+data.store.vanityUrl+'/'+data.store.cityId.name+'/'+data.store.storeId%>" target="_blank"><i class="fa fa-google-plus" aria-hidden="true" style="color: #d34836"></i></a>
+                </div>
+            </div>
+        </form>
+    </div> -->
+    <!-- =================================================
+    Customer Experiences Area End -->
+    <% include ./partials/footer.html %>
+        <script type="text/javascript">
+        var storeId = "<%=data.store._id%>";
+
+        $('.asdfasfasdf').val(BASE_URL + changeToVanityurl((data.store.cityId && data.store.cityId.name) ? data.store.cityId.name + ' delhi' : '-') + '/' + data.store.vanityUrl + '?store=' + data.store.storeId)
+        var startFrom = 1
+        var filter = { filterBy: "New" };
+        getExperiences(0, 5, 1, startFrom);
+        getStoreInfolytics();
+
+        function getExperiences(skip, limit, liId, startFrom) {
+            $.ajax({
+                url: BASE_URL + "getStoreExperinces/" + (storeId) + "?skip=" + skip + "&limit=" + limit + "&startFrom=" + startFrom + "&filterBy=" + filter.filterBy,
+                method: 'GET', // 'POST'
+                cache: false,
+                dataType: 'json',
+                data: {},
+                headers: {},
+                success: function(response) {
+                    console.log("ppppppp", response)
+
+                    if (response.status === 'success') {
+                        $('.experience-result-list').html(response.html);
+                        $('.pagination-01 .pagination').html(response.pagination);
+                        $('.pagination-01 .pagination .active').removeClass('active');
+                        $('#' + liId + '').addClass('active');
+                        // $(".popover-toggle").attr("data-toggle", "popover");
+                    } else {
+                        $('#createexperiences').css('display', 'none');
+                    }
+                    $('.linkify').linkify();
+                },
+                error: function(error) {
+                    $('.first-step .error-main-mess').text(error.message);
+                    $('#createexperiences').css('display', 'none');
+
+                },
+                beforeSend: function() {
+
+                },
+                complete: function() {
+                    // We can make status as processing done for forms and all.
+                }
+            })
+        }
+
+        function nextPage(limit) {
+            var activePage = $('.pagination-01 .pagination .active').attr("id");
+            var method = $('.pagination-01 .pagination .active').attr("onclick");
+            var values = method.substring(method.indexOf('(') + 1, method.lastIndexOf(')') - 1).split(',');
+            var skip = parseInt(values[0]) + parseInt(values[1]);
+            if (((skip / limit) % 10) === 0) {
+                startFrom = startFrom + 10;
+            }
+            activePage = parseInt(activePage) + 1;
+            getExperiences(skip, limit, activePage, startFrom)
+        }
+
+        function prevPage(limit) {
+            var activePage = $('.pagination-01 .pagination .active').attr("id");
+            var method = $('.pagination-01 .pagination .active').attr("onclick");
+            var values = method.substring(method.indexOf('(') + 1, method.lastIndexOf(')') - 1).split(',');
+            var skip = parseInt(values[0]) - parseInt(values[1]);
+            if (skip > 0 && ((skip / limit) % 10) === 0) {
+                startFrom = startFrom - 10;
+            }
+            activePage = parseInt(activePage) - 1;
+            getExperiences(skip, limit, activePage, startFrom)
+        }
+
+        function more(limit) {
+            var dottedPostion = $('.pagination-01 .pagination .dotted').attr("id");
+            var method = $('.pagination-01 .pagination .dotted').attr("onclick");
+            var values = method.substring(method.indexOf('(') + 1, method.lastIndexOf(')') - 1).split(',');
+            var skip = parseInt(values[0]) - parseInt(values[1]);
+            activePage = startFrom = parseInt(dottedPostion) + 1;
+            getExperiences(skip, limit, activePage, startFrom)
+        }
+
+        function less(limit) {
+            var dottedPostion = $('.pagination-01 .pagination .dotted').attr("id");
+            var method = $('.pagination-01 .pagination .dotted').attr("onclick");
+            var values = method.substring(method.indexOf('(') + 1, method.lastIndexOf(')') - 1).split(',');
+            var skip = parseInt(values[0]) - parseInt(values[1]);
+            activePage = startFrom = parseInt(dottedPostion) - 1;
+            getExperiences(skip, limit, activePage, startFrom)
+        }
+
+        function filterExp(filterBy) {
+            filter.filterBy = filterBy;
+            getExperiences(0, 5, 1, startFrom);
+        }
+
+
+
+        function getStoreInfolytics() {
+            $.ajax({
+                url: BASE_URL + "getStoreInfolytics/" + storeId,
+                method: 'GET', // 'POST'
+                cache: false,
+                dataType: 'json',
+                data: {},
+                headers: {},
+                success: function(response) {
+                    // console.log(response)
+
+                    if (response.status === 'success') {
+                        if (response.docs.length > 0) {
+                            $('.mtr-reccomented>span').html(Math.round(response.docs[0].store.recommendedScore) + "%");
+                            var imgName = 0;
+                            for (var j = 10; j <= Math.round(response.docs[0].store.recommendedScore); j = j + 10) {
+                                imgName++;
+                                if (j < Math.round(response.docs[0].store.recommendedScore) && Math.round(response.docs[0].store.recommendedScore) < (j + 10)) {
+                                    imgName++;
+                                    break;
+                                }
+
+                            }
+                            var img = BASE_URL + "img/spedometer/meter_bar_" + (imgName < 3 ? 'red' : (imgName >= 3 && imgName < 7) ? 'yellow' : 'green') + "_" + imgName + ".png";
+                            if (imgName == 0) {
+                                img = BASE_URL + "img/spedometer/meter_bar_0.png";
+                            }
+                            $('#meter-dial').attr("src", img);
+                            // $('#pointer').css({
+                            //     "transform": 'rotate(' + Math.round(response.docs[0].store.recommendedScore) + 'deg)',
+                            //     "webkitTransform": 'rotate(' + Math.round(response.docs[0].store.recommendedScore) + 'deg)'
+                            // });
+                            var stars = "";
+                            for (var i = 0; i < 5; i++) {
+                                if (i < Math.round(response.docs[0].store.overallRating)) {
+                                    stars += "<li class='active'><a href='javascript:;'><i class='fa fa-star' aria-hidden='true'></i></a></li>";
+                                } else {
+                                    stars += "<li><a href='javascript:;'><i class='fa fa-star' aria-hidden='true'></i></a></li>";
+                                }
+                            }
+                            $('.mtr-rating .mt-ratings').html(stars);
+                            var group = "";
+
+
+                            console.log("response",response)
+                            for (var i of response.docs) {
+                                if (i.percentage>0) {
+                                    group += "<li style='height:90px'><div class='rate-list-detail clearfix'>";
+
+                                    if (i.type === "AMENITIES") {
+                                        group += "<div class='title'>Amenities</div>";
+
+                                    }
+
+                                    if (i.type === "INTEGRITY") {
+                                        group += "<div class='title'>Integrity</div>";
+
+                                    }
+                                    if (i.type === "QUALITY OF WORK") {
+                                        group += "<div class='title'>Quality of Work</div>";
+
+                                    }
+                                    if (i.type === "CUSTOMER SERVICE") {
+                                        group += "<div class='title'>Customer Service</div>";
+                                    }
+
+
+                                    group += "<div class='percentage'>" + Math.round(i.percentage) + "%</div>";
+                                    group += "<div class='progress-vis'>";
+                                    if (i.type === "AMENITIES") {
+                                        group += "<div class='progress green'>";
+                                    }
+
+                                    if (i.type === "INTEGRITY") {
+                                        group += "<div class='progress yellow'>";
+                                    }
+                                    if (i.type === "QUALITY OF WORK") {
+                                        group += "<div class='progress red'>";
+                                    }
+                                    if (i.type === "CUSTOMER SERVICE") {
+                                        group += "<div class='progress blue'>";
+                                    }
+                                    group += "<div class='progress-bar' role='progressbar' aria-valuenow='" +
+                                        Math.round(i.percentage) + "' aria-valuemin='0' aria-valuemax='100' style='width:" + Math.round(i.percentage) + "%;'></div>";
+                                    group += "</div>";
+                                    group += "</div>";
+                                    group += "</div>"
+                                    group += "</li>";
+
+                                }
+
+                                $('.rate-detail .rate-list').html(group);
+                            }
+                        }
+                    }
+
+                },
+                error: function(error) {
+                    $('.first-step .error-main-mess').text(error.message)
+
+                },
+                beforeSend: function() {
+
+                },
+                complete: function() {
+                    // We can make status as processing done for forms and all.
+                }
+            })
+
+        }
+        </script>
+        <script type="text/javascript">
+        //body
+        $('html').on('click', function(e) {
+            $('[data-toggle=popover]').each(function() {
+                // hide any open popovers when the anywhere else in the body is clicked
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                    $(this).popover('hide');
+                }
+            });
+        });
+
+        function showPopover() {
+            $("[data-toggle=popover]").popover({
+                html: true,
+                content: function() {
+                    return '<form class="form-inline" role="form">\
+                            <div class="form-group">\
+                                <p style="color: #4e4e4e">Share </p>\
+                                <input class="headerSearch search-query" id="str" class="asdfasfasdf" name="str" size="40" \
+                                value="' + BASE_URL + changeToVanityurl((data.store.cityId && data.store.cityId.name) ? data.store.cityId.name : '-') + '/' + data.store.vanityUrl + '?store=' + data.store.storeId + '"\
+                                type="text"  />\
+                                <br/>\
+                                <br/>\
+                                <div id="share-icons">\
+                                    <a href="https://www.facebook.com/sharer.php?u=' + BASE_URL + data.store.cityId.name + '/' + data.store.vanityUrl + '?store=' + data.store.storeId + '" target="_blank"><i class="fa fa-facebook"  aria-hidden="true" style="color: #3b5998"></i></a>\
+                                    <a href="https://twitter.com/share/?via=' + BASE_URL + '&url=' + BASE_URL + data.store.cityId.name + '/' + data.store.vanityUrl + '?store=' + data.store.storeId + '" target="_blank"><i class="fa fa-twitter" aria-hidden="true" style="color: #0084b4"></i></a>\
+                                    <a href="https://plus.google.com/share?url=' + BASE_URL + data.store.cityId.name + '/' + data.store.vanityUrl + '?store=' + data.store.storeId + '" target="_blank"><i class="fa fa-google-plus" aria-hidden="true" style="color: #d34836"></i></a>\
+                                </div>\
+                            </div>\
+                        </form>';
+                }
+            });
+
+        }
+        </script>
+        <style type="text/css">
+        .popover {
+            max-width: 400px;
+        }
+
+        .popover-content {
+            width: 400px;
+        }
+        </style>
+        <script>
+        function getGraphData() {
+            $.ajax({
+                url: BASE_URL + "getGraphData/" + storeId,
+                method: 'GET', // 'POST'
+                cache: false,
+                dataType: 'json',
+                data: {},
+                headers: {},
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('#statistic-message').text(response.statisticYear)
+                        var ctx = document.getElementById("myChart").getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: Object.keys(response.doc),
+                                datasets: [{
+                                    label: '% of rating',
+                                    fill: false,
+                                    data: Object.values(response.doc),
+                                    borderColor: [
+                                        'rgba(255,99,132,1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                    borderWidth: 2
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: false,
+                                            max: 100,
+                                            min: 0
+                                        },
+                                        gridLines: {
+                                            display: false
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    }
+                },
+                error: function(error) {
+                    $('.first-step .error-main-mess').text(error.message)
+
+                },
+                beforeSend: function() {
+
+                },
+                complete: function() {
+                    // We can make status as processing done for forms and all.
+                }
+            })
+        };
+        getGraphData();
+        </script>

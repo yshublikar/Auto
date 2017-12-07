@@ -1,0 +1,68 @@
+<!-- Start: top Head -->
+<div class="top-head">
+    <div class="container">
+        <ul class="droppers">
+            <li>
+                <%if(data.userDetails&&data.userDetails.name){%>
+                    <a href="#" class="user-togle"> <span class="profile-img"><img style="width:35px;border-radius: 50%;" class="top-icos" src="<%=( BASE_URL + (data.userDetails && data.userDetails.anonymous ? data.userDetails.avatarImage: (data.userDetails ? data.userDetails.profileImage : '') ))%>" onerror="this.src='<%=BASE_URL%>img/user-demo.png'" alt=""></span> <span><%=(data.userDetails && data.userDetails.anonymous ? data.userDetails.displayName: (data.userDetails ? data.userDetails.name : '') )%></span> <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <%if(data.userDetails && (data.city && data.city.name)){%>
+                        <div class="sub-menu-top">
+                            <div class="all-links">
+                                <ul>
+                                    <li><a href="<%=BASE_URL+'profile/'+data.userDetails.userId%>">My Profile</a></li>
+                                    <li><a href="<%=BASE_URL+'profile/'+data.userDetails.userId+'/#edit-profile'%>">Edit Profile</a></li>
+                                    <li><a href="<%=BASE_URL+'profile/'+data.userDetails.userId+'/#profile-settings'%>">Settings</a></li>
+                                    <!-- <li><a href="<%=BASE_URL+'compare'%>">Compare</a></li> -->
+                                    <!-- <li><a href="<%=BASE_URL+'experience-details'%>">My experience</a></li>
+                                <li><a href="#">Customers</a></li>
+                                <li><a href="<%=BASE_URL+'experience-details'%>">All Experience</a></li>
+
+                                <li><a href="<%=BASE_URL+'experience-details'%>">All Experience</a></li> -->
+                                </ul>
+                                <a href="javascript:;" class="log-out-btn clearfix"><img src="<%=BASE_URL+'img/logout-ico.png'%>" alt=""> Logout</a>
+                            </div>
+                        </div>
+                        <%} if(data.userDetails.newUser){%>
+                            <form method="post" name="displayFrm" id="displayFrm" action="<%= BASE_URL+'update/loginUserDetails'%>">
+                                <div class="search-top <%=(data.userDetails.newUser ? 'active' : '')%> search-top-fb">
+                                    <div class="display-bx">
+                                        <div class="search-field">
+                                            <input type="text" name="displayNameInput" id="displayNameInput" placeholder="Display Name" required value="<%=data.userDetails?data.userDetails.displayName:''%>">
+                                        </div>
+                                        <div class="search-field col-offset-2">
+                                            <input type="checkbox" name="anonymousInput" id="anonymousInput" value="true" <%=data.userDetails.anonymous? "checked": ""%>>
+                                            <label>Make me as anonymous user</label>
+                                        </div>
+                                        <div class="search-field">
+                                            <button type="submit" class="green-btn-01 setting-smt"><i class="fa fa-check" aria-hidden="true"></i> Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <%
+                  }
+                }else{%><span id="login-fb"><a href="javascript:;" class="clearfix" onclick="getStatus()"><img class="top-icos" src="<%=BASE_URL+'img/fb-ico.png'%>" alt=""><span class="login-fb">LOGIN WITH FACEBOOK</span></a>
+                                </span>
+                                <%}%>
+            </li>
+            <li>
+                <a href="javascript:;" class="place-togle">
+                    <img class="top-icos" src="<%=BASE_URL+'img/location-ico.png'%>" alt="">
+                    <span class="text-uppercase" ><%= (data.city && data.city.name ? data.city.name : 'SELECT YOUR PLACE')%> </span>
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </a>
+                <div class="search-top search-top-used <%=((data.city && data.city.name)||(data.page=='404page') ? '' : 'active active-first')%>">
+                    <div class="search-bx">
+                        <div class="search-field">
+                            <input type="text" name="searchCityInput" id="searchCityInput" placeholder="Your Place" onkeyup="getCities()">
+                        </div>
+                        <ul class="search-result-top" id="searchResultTop">
+                            <li><a>Type minimum two characters to find</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- End: top Head -->

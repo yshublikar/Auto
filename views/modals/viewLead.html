@@ -1,0 +1,52 @@
+<div class="modal-dialog" role="document">
+    <!-- <div class="modal-content"> -->
+    <div class="kw-modal ">
+        <button type="button" class="arcticmodal-close kw-modal-close" data-dismiss="modal"></button>
+        <header class="kw-modal-header">
+            <h3><%=headerName%></h3>
+        </header>
+        <!-- - - - - - - - - - - - - - End of Header - - - - - - - - - - - - - - - - -->
+        <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+        <div class="kw-modal-content">
+            <form>
+                <ul>
+                    <li class="row">
+                        <div class="col-xs-12">
+                            <label for="text-input-1" class="kw-required">
+                               Name
+                            </label>
+                            <input type="text" name="name" id="name" value="<%=data.name%>">
+                        </div>
+                    </li>
+                    <!--/ .row -->
+                    <li class="row">
+                        <div class="col-xs-12">
+                            <label for="text-input-2" class="kw-required">
+                                Email
+                            </label>
+                            <input type="text" name="email" id="email" value="<%=data.email%>">
+                        </div>
+                    </li>
+                    <!--/ .row -->
+                    <li class="row">
+                        <div class="col-xs-12">
+                            <label for="text-input-3" class="kw-required">
+                                Phone
+                            </label>
+                            <input type="text" name="leadPhone" id="phone" value="<%=data.phone%>">
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="col-xs-12">
+                            <label for="text-input-4" class="kw-required">
+                                Message
+                            </label>
+                            <textarea required rows="5" name="leadMessage" disabled=""><%=data.message%></textarea>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+    <!-- </div> -->
+</div>

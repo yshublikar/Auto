@@ -1,0 +1,26 @@
+<div class="banner-main">
+    <div class="container">
+        <h1>Help Centre</h1>
+        <div class="search-form faq-search">
+            <form method="get" action="<%= BASE_URL+'faq/searchPage'%>">
+                <div class="left-box">
+                    <ul>
+                        <li>
+                            <input type="text" name="search" id="faq-search" class="faq-togle" placeholder="Search by key words..." autocomplete="off" required>
+                            <div class="serch-res-dealer faq-togle-cont" style="visibility: hidden;">
+                                <span class="toper"></span>
+                                <!--  <div id="search-result"> -->
+                                <div class="faq-search-tit">Top article suggestions</div>
+                                <ul id="search-result">
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="right-box">
+                    <button type="submit" class="submit-btn clearfix"><span></span> Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

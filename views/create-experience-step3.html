@@ -1,0 +1,318 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-main">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head inner-head">
+                <% include ./partials/menu-area.html %>
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- =================================================
+    Header Area End -->
+    <!-- Breadcrumb Area Start
+    ====================================================== -->
+    <section class="breadcrumb-main">
+        <div class="container">
+            <ul class="crumb">
+                <li><a href="<%=BASE_URL%>">Home</a></li>
+                <li class="active"><a href="javascript:;">Create Experience</a></li>
+            </ul>
+        </div>
+    </section>
+    <!-- =================================================
+    Breadcrumb Area End -->
+    <!-- Content Area Start
+    ====================================================== -->
+    <section class="inner-main">
+        <div class="steptab-area" id="steps-top">
+            <div id="msform">
+                <!-- Start: progressbar -->
+                <ul id="progressbar">
+                    <li class="active"><span>Step 1</span></li>
+                    <li class="active"><span><span>Step 2</span></span>
+                    </li>
+                    <li class="active"><span><span>Step 3</span></span>
+                    </li>
+                </ul>
+                <!-- End: progressbar -->
+                <div class="steptab-steps clearfix">
+                    <!-- Start: Third Step -->
+                    <form method="post" name="questionFrm" id="questionFrm" action="<%= BASE_URL+'create-experience'%>">
+                        <fieldset class="third-step">
+                            <!-- Start: Error Div -->
+                            <div class="error-main-mess" style="display:none;"><i class="fa fa-info-circle" aria-hidden="true"></i> To continue you must fill all requirement fields</div>
+                            <!-- End: Error Div -->
+                            <h4 class="text-center">Could you say a little more about it</h4>
+                            <p class="text-center">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                            <input type="hidden" name="experienceId" id="experienceId" value="<%=data.experience.experienceId%>">
+                            <div class="third-area">
+
+                                <%var m=10; data.groups.forEach(function(item){%>
+                                    <h6><%=item.name%></h6>
+                                    <hr>
+                                    <!--  <%=item.name%>-->
+                                    <%if (item.questions[0].questionId.type=='Opinion'){%>
+                                        <div class="activity-btn-groups">
+                                            <%}else if(item.questions[0].questionId.type=='Rating'){%>
+                                                <div class="ratting-group">
+                                                    <%}else if(item.questions[0].questionId.type=='Boolean'){
+                                                    %>
+                                                        <%
+                                                        }
+                                    var i=1;
+                                    
+                                    item.questions.forEach(function(row,index){
+                                     var questionOptions=row.questionId.options
+                                    %>
+                                                            <%if (row.questionId.type=='Opinion'){%>
+                                                                <div class="activity-btn-all clearfix">
+                                                                    <label>
+                                                                        <%=row.questionId.displayText%>
+                                                                    </label>
+                                                                    <div class="activity-btns ">
+                                                                        <ul class="nav" id="rate-time-spent<%=index%>">
+                                                                            <%questionOptions.forEach(function(option){ %>
+                                                                                <li onclick="changeClass(this)">
+                                                                                    <a href="javascript:;" class="act-btn d_id" data-q_id="<%=row.questionId._id%>" data-value="<%=option.value%>" data-group_id="<%=item._id%>">
+                                                                                        <%=option.text%>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <%})%>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <!--  </div> -->
+                                                                <%}else if(row.questionId.type=='Rating'){%>
+                                                                    <!-- Start: Rating 01 -->
+                                                                    <input type="hidden" name="questionId" value="<%=row.questionId._id%>">
+                                                                    <div class="rating-single">
+                                                                        <div class="ratting-div clearfix" id="ratting-quality">
+                                                                            <label>
+                                                                                <%=row.questionId.displayText%>:</label>
+                                                                            <select class="example-square" name="rating" id="quality-rating<%=index%>" autocomplete="off" onchange="getValue('<%-row.questionId._id%>','<%=index%>','<%=item._id%>')">
+                                                                                <option value=""></option>
+                                                                                <%questionOptions.forEach(function(option){ %>
+                                                                                    <option value="<%=option.value%>" data-html="<%=option.text%>">
+                                                                                        <%=option.text%>
+                                                                                    </option>
+                                                                                    <%})%>
+                                                                            </select>
+                                                                            <div class="ratting-detail" id="quality-rating-detail"><span class="tip"></span> Click to rate</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End: Rating 01 -->
+                                                                    <%} else if(row.questionId.type=='Boolean'){%>
+                                                                        <div class="recomment-radio" style="padding-top: 0px; <%= (item.questions.length != index+1) ? 'padding-bottom: 0px;': '' %>">
+                                                                            <label>
+                                                                                <%=row.questionId.displayText%>
+                                                                            </label>
+                                                                            <%questionOptions.forEach(function(opt){ %>
+                                                                                <label for="radio-<%=m%>">
+                                                                                    <%=opt.text%>
+                                                                                </label>
+                                                                                <input type="radio" name="questionId<%=row.questionId._id%>" id="radio-<%=m%>" class="ui-checkboxs d_id" value="<%=opt.value%>" data-q_id="<%=row.questionId._id%>" data-group_id="<%=item._id%>" data-value="<%=opt.value%>">
+                                                                                <% 
+                                                                   m++;
+
+                                                                     })%>
+                                                                        </div>
+                                                                        <%
+                                                                        }
+                                    i++;
+                                    })%>
+                                                </div>
+                                                <%})%>
+                                                    <hr>
+                                                    <div class="btm-fields">
+                                                        <input type="hidden" name="questions" id="questions">
+                                                        <label>Tell us one best thing (optional) <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                                        <input class="frm-txt-gray" name="bestThing" id="bestThing" placeholder="Write best thing" type="text">
+                                                        <label>Tell us one worst thing (optional) <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                                        <input class="frm-txt-gray" name="worstThing" id="worstThing" placeholder="Write worst thing" type="text">
+                                                        <!--   <div class="recomment-radio">
+                                       
+                                    </div>
+                                    <hr> -->
+                                                        <div class="recomment-radio" style="padding-bottom: 0px;">
+                                                            <label>Do you recommend this Store to other customers?</label>
+                                                            <label for="radio-5">Yes</label>
+                                                            <input type="radio" name="isRecommended" id="radio-5" class="ui-checkboxs" value="1">
+                                                            <label for="radio-6">No</label>
+                                                            <input type="radio" name="isRecommended" id="radio-6" class="ui-checkboxs" value="0">
+                                                        </div>
+                                                        <%
+                                        var j=0;
+                                        data.attached_questions.forEach(function(questionRow,index){
+
+                                            var questionRowOptions=questionRow.questionId.options
+                                        %>
+                                                            <div class="recomment-radio" style="padding-top: 0px; <%= (data.attached_questions.length != index+1) ? 'padding-bottom: 0px;': '' %>">
+                                                                <label>
+                                                                    <%=questionRow.questionId.displayText%>
+                                                                </label>
+                                                                <%  questionRowOptions.forEach(function(rowOption){ %>
+                                                                    <label for="radio-<%=j%>">
+                                                                        <%=rowOption.text%>
+                                                                    </label>
+                                                                    <input type="radio" name="questionId<%=questionRow.questionId._id%>" id="radio-<%=j%>" class="ui-checkboxs d_id" value="<%=rowOption.value%>" data-q_id="<%=questionRow.questionId._id%>" data-group_id="0" data-value="<%=rowOption.value%>">
+                                                                    <% j++; })%>
+                                                            </div>
+                                                            <% })%>
+                                                                <hr>
+                                                                <div class="agree-policy">
+                                                                    <input type="checkbox" name="checkbox-1" id="checkbox-agree" class="ui-checkboxs" value="1">
+                                                                    <label for="checkbox-agree"><span class="policy-datail">I certify that this review is based on my own experience and is my genuine opinion of this dealer/worksop, and that I have no personal or business relationship with this establishment, and have not been offered any incentive or payment originating from the establishment to write this review. I understand that Brand Label has a zero-tolerance policy on fake reviews. <a href="#">Learn more</a></span></label>
+                                                                </div>
+                                                                <div class="agree-policy-btn">
+                                                                    <button type="button" name="" class="green-btn-01" id="submitBtn"><i class="fa fa-paper-plane" aria-hidden="true"></i> <span id="submitText">SUBMIT YOUR EXPERIENCE</span></button>
+                                                                </div>
+                                                    </div>
+                                        </div>
+                        </fieldset>
+                        <!-- End: Third Step -->
+                        <!-- End: Third Step -->
+                    </form>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- =================================================
+    Profile Area End -->
+    <% include ./partials/footer.html %>
+        <!-- Step Form Js -->
+        <script>
+        <%if(data.userDetails&&data.city){%>
+        /*  var data = '<%-JSON.stringify(data)%>';
+                        data = JSON.parse(data);*/
+        var allQuestions = [];
+
+        allQue = {};
+        if (data.attached_questions.length > 0) {
+            $.each(data.attached_questions, function(item) {
+                allQuestions.push({ "questionId": data.attached_questions[item].questionId._id, "groupId": "0" });
+
+            })
+        }
+        if (data.groups.length > 0) {
+            $.each(data.groups, function(item) {
+                var groupQuestions = data.groups[item].questions;
+                $.each(groupQuestions, function(que) {
+                    allQuestions.push({ "questionId": groupQuestions[que].questionId._id, "groupId": data.groups[item]._id });
+
+                })
+
+
+
+            })
+        }
+
+        /// Second Step
+
+        $(".d_id").click(function() {
+
+            var id = $(this).data('q_id');
+            var value = $(this).data('value');
+            var groupId = $(this).data('group_id');
+            console.log("groupId:", groupId);
+            indexArr = allQuestions.findIndex(x => x.questionId == id & x.groupId == groupId);
+            console.log("indexArr: ", indexArr);
+            allQuestions[indexArr] = { "questionId": id, "groupId": groupId, "value": value };
+
+
+        });
+
+
+
+        function changeClass(el) {
+            $(el).parent().find('li').removeClass('active');
+            $(el).addClass('active');
+
+        }
+
+        function getValue(_row, index, groupId) {
+
+            var value = $("#quality-rating" + index).val();
+            indexArr = allQuestions.findIndex(x => x.questionId == _row & x.groupId == groupId);
+            allQuestions[indexArr] = { "questionId": _row, "groupId": groupId, "value": value };
+
+
+
+        }
+
+        $('#submitBtn').click(function(event) {
+
+
+            $('.third-step .error-main-mess').css('display', 'none');
+
+            if ($('input[name=isRecommended]:checked').length <= 0 || $('input[id=checkbox-agree]:checked').length <= 0) {
+                $('.third-step .error-main-mess').css('display', 'block');
+                $('.third-step .error-main-mess').text("To continue you must fill all required field");
+                return;
+            }
+            var flag = false;
+
+            for (var que = 0; que < allQuestions.length; que++) {
+                if (allQuestions[que].value === undefined || allQuestions[que].value === '') {
+                    $('.third-step .error-main-mess').css('display', 'block');
+                    $('.third-step .error-main-mess').text("To continue you must fill all required field");
+                    flag = true;
+                }
+
+            }
+
+            if (flag) {
+                return;
+            } else {
+                var questions = [];
+                $.each(allQuestions, function(que) {
+
+                    obj = {
+                        "questionId": allQuestions[que].questionId,
+                        "value": allQuestions[que].value,
+                        "groupId": allQuestions[que].groupId,
+                    }
+                    questions.push(obj);
+
+
+                })
+
+
+                var isRecommended = $('input[name=isRecommended]:checked').val();
+                var bestThing = $('#bestThing').val();
+                var worstThing = $('#worstThing').val();
+                var experienceId = $('#experienceId').val();
+                // alert(isRecommended);
+                $.ajax({
+                    url: $('#questionFrm').attr('action'),
+                    method: 'POST', // 'POST'
+                    cache: false,
+                    dataType: 'json',
+                    data: { questions: questions, isRecommended: isRecommended, bestThing: bestThing, worstThing: worstThing, experienceId: experienceId },
+                    headers: {},
+                    success: function(response) {
+                        //$("#submitText").html("Submit Your Experience");
+                        window.location = (BASE_URL + changeToVanityurl(data.city && data.city.name || '-') + '/' + (response.doc.storeId && response.doc.storeId.vanityUrl || '-') + '/experiences/' + changeToVanityurl(response.doc.posts[0].title) + '?experience=' + response.doc.experienceId) 
+                    },
+                    error: function(error) {
+                        $("#submitText").html("Submit Your Experience");
+                        $('.third-step .error-main-mess').css('display', 'block');
+                        $('.third-step .error-main-mess').text(error.message)
+                    },
+                    beforeSend: function() {
+                        $("#submitText").html("Submiting...");
+                    },
+                    complete: function() {
+
+                        // We can make status as processing done for forms and all.
+                    }
+                })
+
+            }
+        })
+        <%} else {%>
+        $('.third-step .error-main-mess').css('display', 'block');
+        $('.third-step .error-main-mess').text("Please login using facebook and select city to post your experience");
+        <%}%>
+        </script>

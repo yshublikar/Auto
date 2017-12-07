@@ -1,0 +1,529 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-inner">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head store-banner" style="background: url(<%=((data.store && data.store.makeId && data.store.makeId.brandingImage) ? BASE_URL+data.store.makeId.brandingImage : BASE_URL)%>), url(<%=BASE_URL%>img/store-head-bg.jpg);">
+                <% include ./partials/menu-area.html %>
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- =================================================
+    Header Area End -->
+    <!-- Navigation Area Start
+    ====================================================== -->
+    <section class="store-nav">
+        <div class="floated-store experience-store">
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-6">
+                        <a class="more-links">More <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                        <ul class="store-navigation">
+                            <li><a href="#overview"><span class="store-meter"></span>Overview</a></li>
+                            <li class="active"><a href="#experience"><span class="store-time"></span>Experience</a></li>
+                            <% if(data.experience.posts.length > 1){%>
+                                <li><a href="<%=(data.experience.posts.length > 1 ? '#updates-here': 'javascript:;')%>">
+                                <span class="store-update"></span>Updates</a>
+                                    <ul class="store-sub">
+                                        <%data.experience.posts.forEach(function(element,index) { if(index > 0){ %>
+                                            <%var mesg=['','ONE','TWO','THREE','FOUR','FIVE','SIX','SEVEN','EIGHT','NINE','TEN','More'];%>
+                                                <li><a href="#<%=(index==1?'updates-here':'update-'+index)%>">Updated <%=mesg[index]%></a></li>
+                                                <% }})%>
+                                                    <!-- <li><a href="#update-2">Updated Two</a></li> -->
+                                    </ul>
+                                </li>
+                                <%}%>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 btn-cont" style="display: <%=(((data.userDetails&&data.experience.posts.length>0)&&(data.userDetails._id==data.experience.userId._id)&&(data.experience.closed !=true))?'block':'none')%>">
+                        <a href="#" class="button-big cus-popup-1">WRITE A NEW UPDATE</a>
+                        <a href="#" class="button-big no-bg cus-popup-2">CLOSE STORY</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Start: Popup Contents -->
+        <!-- Popup 01 -->
+        <div class="exp-detail-pop-01">
+            <div class="popup-content">
+                <div class="close-pop"><a href="#" class="close-popup"><img src="/img/close-large-ico.png" alt=""></a></div>
+                <h4>Write a New Update</h4>
+                <p>Changed your mind or forgot to write something?</p>
+                <div class="pop-sections">
+                    <form action="javascript:addPost('<%=data.experience._id%>','<%=data.userDetails&&data.userDetails._id%>','<%=data.experience.storeId._id%>')">
+                        <div class="error-main-mess" style="display:none;"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
+                        <h6>Your Overall Rating <span class="what-is" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip contents goes here">?</span></h6>
+                        <!-- Start: Rating 01 -->
+                        <div class="rating-single first">
+                            <div class="ratting-div clearfix">
+                                <select class="example-square" name="rating" autocomplete="off" id="postRating">
+                                    <option value=""></option>
+                                    <option value="1" data-html="terrible">1</option>
+                                    <option value="2" data-html="poor">2</option>
+                                    <option value="3" data-html="average">3</option>
+                                    <option value="4" data-html="very good">4</option>
+                                    <option value="5" data-html="excellent">5</option>
+                                </select>
+                                <div class="ratting-detail" id="cost-rating-detail"><span class="tip"></span> Click to rate</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>When was this? </label>
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input id="incidentDate" type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <label>Title</label>
+                        <input class="frm-txt-gray" name="" id="userPostTitle" placeholder="Title" type="text" required="">
+                        <label>Subject</label>
+                        <textarea class="frm-txtarea-gray" id="userPostDesc" minlength="200" placeholder="Write your update" required=""></textarea>
+                        <div class="agree-policy-btn" id="add-post-container">
+                            <button class="green-btn-01" id="add-post-btn" type="submit"><i class="fa fa-check" aria-hidden="true"></i>Add your update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Popup 01 -->
+        <!-- Popup 02 -->
+        <div class="exp-detail-pop-02">
+            <div class="popup-content">
+                <form action="javascript:closeStory('<%= JSON.stringify(data.experience.closeStoryQuestions)%>', '<%=data.experience._id%>','<%=data.experience.formSnapshots[0].formId._id%>','<%=data.experience.storeId._id%>')">
+                    <div class="close-pop"><a href="#" class="close-popup"><img src="/img/close-large-ico.png" alt=""></a></div>
+                    <h4>Are you sure you want to close the story?</h4>
+                    <p>If you close story further edits wont be possible for this experience</p>
+                    <div class="err-pop-sections">
+                        <div class="error-main-mess" style="display:none;"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
+                    </div>
+                    <% var questionGroup = data.experience.formSnapshots[0].formId.questionGroups%>
+                        <%for(var i=0; i< questionGroup.length; i++) {%>
+                            <div style="display: <%=((questionGroup[i].type.editable == true)? 'block':'none')%>">
+                                <div class="pop-sections">
+                                    <h6><%=questionGroup[i].name%></h6>
+                                </div>
+                                <div class="pop-sections second">
+                                    <%questions = questionGroup[i].questions%>
+                                        <% m=10;%>
+                                            <%for(var j=0; j< questions.length; j++) {%>
+                                                <%if (questions[j].questionId.type=='Opinion'){%>
+                                                    <div class="activity-btn-all clearfix">
+                                                        <label>
+                                                            <%=questions[j].questionId.displayText%>
+                                                        </label>
+                                                        <div class="activity-btns ">
+                                                            <ul class="nav <%=questionGroup[i]._id%><%=questions[j].questionId._id%>opinion" id="rate-time-spent">
+                                                                <%questions[j].questionId.options.forEach(function(option){ %>
+                                                                    <li onclick="changeClass(this)" class=<%=option.value==questions[j].questionId.value? 'active': ''%>>
+                                                                        <a href="javascript:;" class="act-btn" data-value="<%=option.value%>">
+                                                                            <%=option.text%>
+                                                                        </a>
+                                                                    </li>
+                                                                    <%})%>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <%}else if(questions[j].questionId.type=='Rating'){%>
+                                                        <div class="rating-single">
+                                                            <div class="ratting-div clearfix">
+                                                                <label>
+                                                                    <%=questions[j].questionId.displayText%>:</label>
+                                                                <select class="example-square" name="rating" id="<%=questionGroup[i]._id%><%=questions[j].questionId._id%>rating" autocomplete="off">
+                                                                    <option value=""></option>
+                                                                    <%questions[j].questionId.options.forEach(function(option){ %>
+                                                                        <option value="<%=option.value%>" data-html="<%=option.text%>" <%=option.value==questions[j].questionId.value? 'selected': ''%>>
+                                                                            <%=option.text%>
+                                                                        </option>
+                                                                        <%})%>
+                                                                </select>
+                                                                <div class="ratting-detail" id="quality-rating-detail"><span class="tip"></span> Click to rate</div>
+                                                            </div>
+                                                        </div>
+                                                        <%} else if(questions[j].questionId.type=='Boolean'){%>
+                                                            <div style="padding-top: 0px; <%= (questionGroup[i].questions.length != j+1) ? 'padding-bottom: 0px;': '' %>" class="recomment-radio <%=questionGroup[i]._id%><%=questions[j].questionId._id%>boolean">
+                                                                <label>
+                                                                    <%=questions[j].questionId.displayText%>
+                                                                </label>
+                                                                <%questions[j].questionId.options.forEach(function(option,index){ %>
+                                                                    <label for="radio-<%=m%>" class="<%=option.value==questions[j].questionId.value?'ui-checkboxradio-checked ui-state-active':''%>" id="boolean" data-value="<%=option.value%>">
+                                                                        <%=option.text%>
+                                                                    </label>
+                                                                    <input type="radio" name="questionId<%=questions[j].questionId._id%>" id="radio-<%=m%>" class="ui-checkboxs" value="<%=option.value%>">
+                                                                    <% m++; })%>
+                                                            </div>
+                                                            <%}%>
+                                                                <%}%>
+                                </div>
+                            </div>
+                            <% }%>
+                                <div class="pop-sections second">
+                                    <% var questions = data.experience.formSnapshots[0].formId.questions%>
+                                        <% m=101;%>
+                                            <%for(var i=0; i< questions.length; i++) {%>
+                                                <div style="padding-top: 0px; <%=(questions.length != i+1) ? 'padding-bottom: 0px;': '' %>" class="recomment-radio 0<%=questions[i].questionId._id%>indQue">
+                                                    <label>
+                                                        <%=questions[i].questionId.displayText%>
+                                                    </label>
+                                                    <%questions[i].questionId.options.forEach(function(option,index){ %>
+                                                        <label for="radio-<%=m%>" class="<%=option.value==questions[i].questionId.value?'ui-checkboxradio-checked ui-state-active':''%>" id="boolean" data-value="<%=option.value%>">
+                                                            <%=option.text%>
+                                                        </label>
+                                                        <input type="radio" name="indQue<%=questions[i].questionId._id%>" id="radio-<%=m%>" class="ui-checkboxs" value="<%=option.value%>">
+                                                        <% m++; })%>
+                                                </div>
+                                                <%}%>
+                                </div>
+                                <div class="pop-sections second">
+                                    <div class="recomment-radio isRecommended">
+                                        <label>Do you recommend this Store to other customers?</label>
+                                        <label for="radio-201" data-value="1" class="<%=data.experience.isRecommended == true ?'ui-checkboxradio-checked ui-state-active':''%>">Yes</label>
+                                        <input type="radio" name="radio-201" id="radio-201" class="ui-checkboxs">
+                                        <label for="radio-202" data-value="0" class="<%=data.experience.isRecommended == false?'ui-checkboxradio-checked ui-state-active':''%>">No</label>
+                                        <input type="radio" name="radio-201" id="radio-202" class="ui-checkboxs">
+                                    </div>
+                                    <input class="frm-txt-gray" id="closingNotes" placeholder="Closure Statement" type="text" required>
+                                    <div class="agree-policy-btn">
+                                        <button type="submit" name="" id="close-story-btn" class="green-btn-01"><i class="fa fa-times" aria-hidden="true"></i> CLOSE STORY</button>
+                                    </div>
+                                </div>
+                </form>
+            </div>
+        </div>
+        <!-- Popup 02 -->
+        <!-- Start: Popup Contents -->
+    </section>
+    <!-- =================================================
+    Navigation Area End -->
+    <!-- Overview Area Start
+    ====================================================== -->
+    <section class="store-overview" id="overview">
+        <div class="container">
+            <h3>Overview</h3>
+            <div class="map-sec clearfix">
+                <!-- Start: Company -->
+                <div class="colpany-sec h-380">
+                    <img height="110" src="<%=BASE_URL + data.experience.storeId.logo%>" 
+                        alt="" onerror="this.src='<%=BASE_URL%>img/store-default-ico.png'">
+                    <h5><%=data.experience.storeId.name%></h5>
+                    <p>Make: <span><%=(data.experience.storeId.makeId ? data.experience.storeId.makeId.name : 'Not Available')%></span></p>
+                    <div class="rating-cont">
+                        <ul class="start-rating">
+                            <% for(var i=0; i<5; i++) {
+                            %>
+                                <li <%if (i<Math.round(data.experience.storeId.overallRating)){%> class="active"
+                                    <%}%> ><a href="javascript:;"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                <% } %>
+                        </ul>
+                        <span>(<%=data.count%> votes)</span>
+                    </div>
+                    <div class="contact-btn">
+                        <a href="javascript:;" onclick="addToCompare('<%=data.experience.storeId._id%>')" class="green-btn-01">COMPARE</a></div>
+                </div>
+                <!-- Start: Company -->
+                <!-- Start: Address and Map -->
+                <div class="address-map">
+                    <div class="address-sec">
+                        <p>
+                            <span><i class="fa fa-phone" aria-hidden="true"></i> Phone</span>
+                            <%=data.experience.storeId.phone?data.experience.storeId.phone:"Not available"%>
+                        </p>
+                        <p class="w-40">
+                            <span><i class="fa fa-map-marker" aria-hidden="true"></i> Address</span>
+                            <%=data.experience.storeId.address%>
+                        </p>
+                        <p>
+                            <span><i class="fa fa-envelope" aria-hidden="true"></i> Email</span>
+                            <%=data.experience.storeId.email?data.experience.storeId.email:"Not mentioned"%>
+                        </p>
+                        <p>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i> working hours</span>
+                            <%=(!(data.workingHours && data.workingHours.length > 0)?'Not mentioned':'')%>
+                                <%
+                             var c=1;
+                             data.workingHours.forEach(function(item)
+                             {
+                                 var m=1;
+                                  
+                                 item.workingHours.forEach(function(dayRow)
+                                 {
+                                     if(dayRow.closed==false)
+                                     {
+                                        if(item._id.start && (m==item.workingHours.length ||  m==1))
+                                            {
+                                    %>
+                                    <%=dayRow.day%>
+                                        <%= (m!= item.workingHours.length) ? ' - ' : '' %>
+                                            <%
+                                            }
+                                                     m++;
+                                                          
+                                       }
+                                })
+                                if(item._id.start && item._id.closed==false){
+                                    %>
+                                                :
+                                                <%=item._id.start%>:00 -
+                                                    <%=item._id.end%>:00
+                                                        <%}
+                                if(item._id.start && (c< data.workingHours.length))
+                                  {
+                                %>
+                                                            <br>
+                                                            <% }
+                                     c++ 
+                            })%>
+                        </p>
+                        <%if(data.experience&&data.experience.storeId.website){%>
+                            <p><a href="<%=(data.experience.storeId && data.experience.storeId.website)?data.experience.storeId.website:'javascript:;'%>" class="view-web" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> View website</a></p>
+                            <%}%>
+                    </div>
+                    <div class="map-sec details-page-map" style='padding-left: 28em;'>
+                        <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9328.105669694382!2d-74.01133887902597!3d40.71220226147879!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sin!4v1502259581748" frameborder="0" style="border:0" allowfullscreen></iframe> -->
+                        <!-- <div id="map"></div> -->
+                        <div id="map-frame" class="h-380">
+                            <div id="map_canvas" class="mapping map-frame h-100-p" style="height: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Start: Address and Map -->
+            </div>
+        </div>
+    </section>
+    <!-- =================================================
+    Overview Area End -->
+    <!-- Experience Area Start 
+    ====================================================== -->
+    <section class="experience-detail updated clearfix" id="experience">
+        <!-- Start: Floating Buttons 
+        <ul class="experience-float-btns">
+            <li class="twitter-btn"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+            <li class="facebook-btn"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            <li class="comment-btn"><a href="#"><i class="fa fa-comments" aria-hidden="true"></i> (25)</a></li>
+        </ul>
+        End: Floating Buttons -->
+        <%  var posts=data.experience.posts
+              posts.forEach(function(item,index){%>
+            <div class="container <%=item._id%>container" id="<%=(index == 1 ? 'updates-here': (index!=0?'update-'+ index:'') )%>">
+                <%if(index==1){%>
+                    <h5 class="lite"><%=data.experience.posts.length-1%> Updates</h5>
+                    <%}%>
+                        <% if(index > 0){%>
+                            <hr>
+                            <%}%>
+                                <h3><%=item.title%></h3>
+                                <div class="rating-cont <%=item._id%>rating-cont">
+                                    <ul class="start-rating">
+                                        <% for(var i=1; i<=5; i++) { %>
+                                            <li <%if (i<=item.rating){%> class="active"
+                                                <%}%> ><a href="javascript:;"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                            <% } %>
+                                    </ul>
+                                </div>
+                                <div class="cont-area <%=item._id%>cont-area">
+                                    <p class="linkify">
+                                        <%=item.description%>
+                                    </p>
+                                    <div class="post-details-all clearfix">
+                                        <ul class="post-details">
+                                            <li id="<%=item._id%>likes">
+                                                <a href="javascript:;" class="fb-btn <%=(data.userDetails&&item.likes.length>0&&item.likes.findIndex(x=> x.like==data.userDetails._id)!=-1? 'active':'')%>" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tooltip contents goes here" onclick="LikeOrFlag('Post','<%=data.experience._id%>','<%=item._id%>','<%=data.userDetails&&data.userDetails._id%>','','likes')"><i class="fa fa-thumbs-up" aria-hidden="true"></i>Like <span>(<%=item.likes.length%>)</span></a></li>
+                                            <li id="<%=item._id%>flagged">
+                                                <a href="javascript:;" class="<%=(data.userDetails&&item.flagged.length>0&&item.flagged.indexOf(data.userDetails._id)!=-1? 'active':'')%>" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tooltip contents goes here" onclick="LikeOrFlag('Post','<%=data.experience._id%>','<%=item._id%>','<%=data.userDetails&&data.userDetails._id%>','','flagged')"><i class="fa fa-flag" aria-hidden="true"></i> Flag</a></li>
+                                            <li>
+                                                <a href="javascript:;" data-toggle="popover" data-html="true" data-placement="bottom" title="">
+                                            <i class="fa fa-share-alt" aria-hidden="true"></i> Share</a>
+                                            </li>
+                                            <%if((data.userDetails&&data.userDetails._id) == 
+                                            (data.experience.userId&&data.experience.userId._id)){%>
+                                                <input type="hidden" id="<%=item._id%>incidentDateHidden" value="<%=item.incidentDate%>">
+                                                <li><a href="#" data-toggle="modal" data-target="abc" title="" data-original-title="Tooltip contents goes here" onclick="editPost('<%=item._id%>','<%=item.title%>',<%=JSON.stringify(item.description)%>,'<%=item.incidentDate%>')"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>
+                                                <%}%>
+                                        </ul>
+                                        <div id="popover-content" class="hide">
+                                            <form class="form-inline" role="form">
+                                                <div class="form-group">
+                                                    <p style="color: #4e4e4e">Share </p>
+                                                    <input class="headerSearch search-query" id="str" name="str" size="40" type="text" value="<%=BASE_URL+(data.city&&data.city.name)+'/'+(data.experience&&data.experience.storeId&&data.experience.storeId.vanityUrl)+'/experiences/'+ (data.experience&&data.experience.posts&&data.experience.posts.length>0&&data.experience.posts[0].vanityUrl)+'?experience='+(data.experience&&data.experience.experienceId)%>" />
+                                                    <br/>
+                                                    <br/>
+                                                    <div id="share-icons">
+                                                        <a href="https://www.facebook.com/sharer.php?url=<%=BASE_URL+(data.city&&data.city.name)+'/'+(data.experience&&data.experience.storeId&&data.experience.storeId.vanityUrl)+'/experiences/'+ (data.experience&&data.experience.posts&&data.experience.posts.length>0&&data.experience.posts[0].vanityUrl)+'?experience='+(data.experience&&data.experience.experienceId)%>" target="_blank"><i class="fa fa-facebook"  aria-hidden="true" style="color: #3b5998"></i></a>
+                                                        <a href="https://twitter.com/share/?via=<%=BASE_URL%>&url=<%=BASE_URL+(data.city&&data.city.name)+'/'+(data.experience&&data.experience.storeId&&data.experience.storeId.vanityUrl)+'/experiences/'+ (data.experience&&data.experience.posts&&data.experience.posts.length>0&&data.experience.posts[0].vanityUrl)+'?experience='+(data.experience&&data.experience.experienceId)%>" target="_blank"><i class="fa fa-twitter" aria-hidden="true" style="color: #0084b4"></i></a>
+                                                        <a href="https://plus.google.com/share?url=<%=BASE_URL+(data.city&&data.city.name)+'/'+(data.experience&&data.experience.storeId&&data.experience.storeId.vanityUrl)+'/experiences/'+ (data.experience&&data.experience.posts&&data.experience.posts.length>0&&data.experience.posts[0].vanityUrl)+'?experience='+(data.experience&&data.experience.experienceId)%>" target="_blank"><i class="fa fa-google-plus" aria-hidden="true" style="color: #d34836"></i></a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div id="<%=item._id%>Modal"></div>
+                                        <div class="exp-user">
+                                            <div class="user-details clearfix">
+                                                <span class="profile-img">
+                                <img onerror="this.src='<%=BASE_URL%>img/user-demo.png'"
+                                        src="<%=( BASE_URL + (data.experience.userId && data.experience.userId.anonymous ? data.experience.userId.avatarImage : (data.experience.userId ? data.experience.userId.profileImage:'')))%>" alt=""> <!-- From --> <a class="text-hover-green" href="<%=BASE_URL + 'profile/' + (data.experience.userId && data.experience.userId.userId)%>">
+
+                                             <%=(data.experience.userId && data.experience.userId.anonymous ? data.experience.userId.displayName: (data.experience.userId ? data.experience.userId.name : 'Unknown user') )%></a> 
+                            </span>
+                                            </div>
+                                            <%var month=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+                        %>
+                                                <span class="posted">Posted <%= moment(item.postedOn).tz('Asia/Kolkata').format('llll')%></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Popup 01 -->
+                                <div class="exp-post-pop-01" id="<%=item._id%>editPost">
+                                    <div class="popup-content">
+                                        <div class="close-pop"><a href="#" class="close-popup"><img src="/img/close-large-ico.png" alt=""></a></div>
+                                        <h4>Edit Post</h4>
+                                        <p>Changed your mind or forgot to write something?</p>
+                                        <div class="pop-sections">
+                                            <form action="javascript:updateCommentAndPost('Post','<%=data.experience._id%>','<%=item._id%>','','<%=data.userDetails&&data.userDetails._id%>')">
+                                                <div class="error-main-mess" style="display:none;"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
+                                                <h6>Your Overall Rating <span class="what-is" data-toggle="tooltip" data-placement="right" title="" data-original-title="Over all rating for your store">?</span></h6>
+                                                <!-- Start: Rating 01 -->
+                                                <div class="rating-single first">
+                                                    <div class="ratting-div clearfix">
+                                                        <select class="example-square" name="rating" autocomplete="off" id="<%=item._id%>editPostRating">
+                                                            <option value=""></option>
+                                                            <option value="1" <%=item.rating==1? 'selected': ''%> data-html="terrible">1</option>
+                                                            <option value="2" <%=item.rating==2? 'selected': ''%> data-html="poor">2</option>
+                                                            <option value="3" <%=item.rating==3? 'selected': ''%> data-html="average">3</option>
+                                                            <option value="4" <%=item.rating==4? 'selected': ''%> data-html="very good">4</option>
+                                                            <option value="5" <%=item.rating==5? 'selected': ''%> data-html="excellent">5</option>
+                                                        </select>
+                                                        <div class="ratting-detail" id="cost-rating-detail"><span class="tip"></span> Click to rate</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>When was this? </label>
+                                                    <div class='input-group date' id='<%=item._id%>_datetimepicker'>
+                                                        <input id="<%=item._id%>editPostdatepicker" type='text' class="form-control" />
+                                                        <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <label>Title</label>
+                                                <input class="frm-txt-gray" name="" id="<%=item._id%>editPostTitle" placeholder="Title" type="text" required="" value="<%=item.title%>">
+                                                <label>Subject</label>
+                                                <textarea class="frm-txtarea-gray" id="<%=item._id%>editPostDesc" placeholder="Write your update" minlength="200" required="">
+                                                    <%=item.description%>
+                                                </textarea>
+                                                <div class="agree-policy-btn" id="add-post-container">
+                                                    <button class="green-btn-01 editModel" type="submit"><i class="fa fa-check" aria-hidden="true"></i>Update Post</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Popup 01 -->
+                                <div class="comments-sec">
+                                    <!-- <h4><i class="fa fa-comments" aria-hidden="true"></i> Comments <span>(25)</span></h4> -->
+                                    <ul class="comments-all" id="<%=index%>">
+                                        <%
+                    item.comments.forEach(function(subItem){%>
+                                            <li>
+                                                <span class="<%=subItem._id%>comment-desc linkify"><%=subItem.comment%></span>
+                                                <div class="post-details-all clearfix">
+                                                    <ul class="post-details">
+                                                        <li id="<%=subItem._id%>likes">
+                                                            <a href="javascript:;" class="fb-btn <%=(data.userDetails&&subItem.likes.length>0&&subItem.likes.findIndex(x=> x.like==data.userDetails._id)!=-1? 'active':'')%>" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tooltip contents goes here" onclick="LikeOrFlag('Comment','<%=data.experience._id%>','<%=item._id%>','<%=data.userDetails&&data.userDetails._id%>','<%=subItem._id%>','likes')"><i class="fa fa-thumbs-up" aria-hidden="true">
+                                                            </i>Like <span>(<%=subItem.likes.length%>)</span></a></li>
+                                                        <li id="<%=subItem._id%>flagged"><a href="javascript:;" class="<%=(data.userDetails&&subItem.flagged.length>0&&subItem.flagged.indexOf(data.userDetails._id)!=-1? 'active':'')%>" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tooltip contents goes here" onclick="LikeOrFlag('Comment','<%=data.experience._id%>','<%=item._id%>','<%=data.userDetails&&data.userDetails._id%>','<%=subItem._id%>','flagged')"><i class="fa fa-flag" aria-hidden="true"></i> Flag</a></li>
+                                                        <%if((data.userDetails && data.userDetails._id) == 
+                                                            (subItem.userId&&subItem.userId._id)){%>
+                                                                <li><a href="#" data-toggle="modal" data-target="abc" title="" data-original-title="Tooltip contents goes here" onclick="editComment('<%=data.experience._id%>','<%=item._id%>','<%=subItem._id%>','<%=data.userDetails&&data.userDetails._id%>',<%=JSON.stringify(subItem.comment)%>)"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>
+                                                                <%}%>
+                                                        </ul>
+                                                        <div id="<%=subItem._id%>Modal"></div>
+                                                        <div class="exp-user">
+                                                            <div class="user-details clearfix">
+                                                                <span class="profile-img">
+                                        <img onerror="this.src='<%=BASE_URL%>img/user-demo.png'"
+                                        src="<%=( BASE_URL + (subItem.userId && subItem.userId.anonymous ? subItem.userId.avatarImage : (subItem.userId?subItem.userId.profileImage:'')))%>" alt=""> <!-- From -->  <a href="<%=BASE_URL + 'profile/' + (subItem.userId && subItem.userId.userId)%>">
+                                         <%=(subItem.userId && subItem.userId.anonymous ? subItem.userId.displayName: (subItem.userId ? subItem.userId.name : 'Unknown user') )%></a>
+                                    </span>
+                                                        </div>
+                                                        <%var month=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+                        %>
+                                                            <span class="posted"> Posted <%= moment(subItem.postedOn).tz('Asia/Kolkata').format('llll')%></span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <%  }) %>
+                                    </ul>
+                                    <!-- Start: Comment Section -->
+                                    <div class="repl-comment-sec">
+                                        <div class="clearfix">
+                                            <div class="cmnt-link">
+                                                <%if(data.userDetails&&data.userDetails._id){%>
+                                                    <a class="open-cmnt" onclick="toggleComment('<%=item._id%>commentopt-1')">Add a comment</a>
+                                                    <%}else{%>
+                                                        <a class="open-cmnt" onclick="javascript:facebookLogin();">Add a comment</a>
+                                                        <%}%>
+                                            </div>
+                                            <!-- <div class="cmnt-open"><a href="#">Open 5 more comments</a></div> -->
+                                        </div>
+                                        <div class="open-comment" id="<%=item._id%>commentopt-1">
+                                            <form action="javascript:saveComment('<%=data.experience._id%>','<%=item._id%>','<%=data.userDetails&&data.userDetails._id%>','<%=index%>')">
+                                                <textarea class="frm-txtarea-gray" placeholder="Describe about yourself" id="<%=item._id%>userCommentText" required></textarea>
+                                                <button class="green-btn-01" type="submit" id="<%=item._id%>addComment">
+                                                    <i class="fa fa-check" aria-hidden="true"></i> Add comment
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- End: Comment Section -->
+                                </div>
+            </div>
+            <%  }) %>
+    </section>
+    <!-- =================================================
+    Experience Area End -->
+    <% include ./partials/footer.html %>
+        <script type="text/javascript">
+        //by default experience focus
+        /* $('html, body').animate({
+              scrollTop: $('#experience').offset().top
+          }, 'fast');*/
+        $(document).scrollTop($("#experience").offset().top - 100);
+
+        //body
+        $('html').on('click', function(e) {
+            $('[data-toggle=popover]').each(function() {
+                // hide any open popovers when the anywhere else in the body is clicked
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                    $(this).popover('toggle');
+                    $('.popover').css('display','none');
+                }
+            });
+        });
+
+        $("[data-toggle=popover]").popover({
+            html: true,
+            content: function() {
+                return $('#popover-content').html();
+            }
+        });
+        var userDetails = <%- JSON.stringify(data.userDetails||{})%>;
+        </script>
+        <script type="text/javascript">
+        $(function() {
+            $('#datetimepicker1').datetimepicker();
+        });
+        $(function() {
+            // $('#datetimepicker2').datetimepicker();
+        });
+        </script>
+        <style type="text/css">
+        .popover {
+            max-width: 400px;
+        }
+
+        .popover-content {
+            width: 400px;
+        }
+        </style>

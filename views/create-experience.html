@@ -1,0 +1,584 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-main">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head inner-head">
+                <% include ./partials/menu-area.html %>
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- =================================================
+    Header Area End -->
+    <!-- Breadcrumb Area Start
+    ====================================================== -->
+    <section class="breadcrumb-main">
+        <div class="container">
+            <ul class="crumb">
+                <li><a href="<%=BASE_URL%>">Home</a></li>
+                <li class="active"><a href="javascript:;">Create Experience</a></li>
+            </ul>
+        </div>
+    </section>
+    <!-- =================================================
+    Breadcrumb Area End -->
+    <!-- Content Area Start
+    ====================================================== -->
+    <section class="inner-main">
+        <div class="steptab-area" id="steps-top">
+            <div id="msform">
+                <!-- Start: progressbar -->
+                <ul id="progressbar">
+                    <li class="active"><span>Step 1</span></li>
+                    <li><span><span>Step 2</span></span>
+                    </li>
+                    <li><span><span>Step 3</span></span>
+                    </li>
+                </ul>
+                <!-- End: progressbar -->
+                <div class="steptab-steps clearfix">
+                    <form name="">
+                        <!-- Start: First Step -->
+                        <fieldset class="first-step">
+                            <div class="error-main-mess" style="display:none;"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
+                            <h4>Create Experience for the store you visited</h4>
+                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                            <div class="search-form inner-pg">
+                                <div class="left-box">
+                                    <ul>
+                                        <li>
+                                            <label>Search</label>
+                                            <input type="text" class="dealerships-togle" id="store-search" placeholder="dealerships or workshops">
+                                            <div class="serch-res-dealer">
+                                                <span class="toper"></span>
+                                                <ul id="store-result">
+                                                    <li><a href="#"><i class="add-ico"></i> <span>Can`t find what you`re looking for?</span> Add a listing </a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <label>Near</label>
+                                            <input type="text" class="locations-togle" id="city-search" placeholder="San Francisco, CA">
+                                            <div class="serch-res-location">
+                                                <span class="toper"></span>
+                                                <ul id="city-result">
+                                                    <%data.cities.forEach(function(item){%>
+                                                        <li onclick="selectCity('<%=item.name%>','<%=item._id%>')"><a><i class="pin-ico"></i><%=item.name%> <span><%=item.state%></span></a></li>
+                                                        <%})%>
+                                                            <!--   <li><a href="#"><i class="pin-ico"></i> San Diego <span>California, United States</span></a></li>
+                                                        <li><a href="#"><i class="pin-ico"></i> San Antonio <span>Texas, United States</span></a></li> -->
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="right-box">
+                                    <button type="button" name="next" class="submit-btn clearfix action-button"><span></span> Search</button>
+                                </div>
+                            </div>
+                            <!--                        <input type="button" name="next" class="next action-button" value="Next" />
+-->
+                        </fieldset>
+                        <!-- End: First Step -->
+                        <!-- Start: Second Step -->
+                        <fieldset class="second-step">
+                            <div class="second-area">
+                                <!-- Start: Error Div -->
+                                <div class="error-main-mess" style="display:none;"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
+                                <!-- End: Error Div -->
+                                <h4 class="text-center">Your story will help prospective customers. Thanks!</h4>
+                                <p class="text-center">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                                <!-- Start: Dealer Box -->
+                                <div class="dealer-bx clearfix">
+                                    <div class="img-cont"><img src="img/infi-logo.jpg" alt=""></div>
+                                    <div class="dealer-detail">
+                                        <div class="clearfix">
+                                            <div class="categor">Dealership</div>
+                                            <div class="rate-float"><img src="img/rate.jpg" alt=""> (241 votes)</div>
+                                        </div>
+                                        <h4>Berman's INFINITI</h4>
+                                        <span class="location"><i class="fa fa-map-marker" aria-hidden="true"></i> 640 N La Salle Dr Chicago IL 60654</span>
+                                        <span class="phone"><i class="fa fa-phone" aria-hidden="true"></i> +1 212-226-3126</span>
+                                    </div>
+                                </div>
+                                <!-- End: Dealer Box -->
+                                <div class="rating-sec">
+                                    <label>Your Overal Rating <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                    <div class="rating-single">
+                                        <div class="ratting-div clearfix" id="overall-rating-div">
+                                            <select class="example-square" name="rating" id="overall-rating" autocomplete="off">
+                                                <option value=""></option>
+                                                <option value="1" data-html="terrible">1</option>
+                                                <option value="2" data-html="poor">2</option>
+                                                <option value="3" data-html="average">3</option>
+                                                <option value="4" data-html="very good">4</option>
+                                                <option value="5" data-html="excellent">5</option>
+                                            </select>
+                                            <div class="ratting-detail" id="overall-rating-detail"><span class="tip"></span> Click to rate</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label>Title <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                <input class="frm-txt-gray" name="" placeholder="Title" type="text">
+                                <label>Describe your experience <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                <textarea class="frm-txtarea-gray" placeholder="Tell about your experience (200 character minimum)"></textarea>
+                                <div class="row clearfix">
+                                    <div class="col-md-6">
+                                        <label>What sort of experience was this?</label>
+                                        <select name="" id="exp_type" class="select-ui">
+                                            <option>Select sort of experience</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 select-with-ico">
+                                        <label>When was this? <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                        <input type="text" class="frm-txt-gray" id="datepicker" placeholder="April 2017">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Tell us about your car <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="" id="car_model" class="select-ui">
+                                            <option>Select Model</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="" id="car_variant" class="select-ui">
+                                            <option>Select Variant</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 padding-30">
+                                        <input class="frm-txt-gray" name="" placeholder="Vehicle Identification Number" type="text">
+                                    </div>
+                                    <div class="col-md-6 padding-30">
+                                        <a class="varification-link" href="#">Verify?</a>
+                                    </div>
+                                </div>
+                                <div class="test">
+                                    <input type="button" name="next" class="next green-btn-01 action-button" value="Continue" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <!-- End: Second Step -->
+                        <!-- Start: Third Step -->
+                        <fieldset class="third-step">
+                            <h4 class="text-center">Could you say a little more about it</h4>
+                            <p class="text-center">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                            <div class="third-area">
+                                <h6>Your first-hand experiences really help other car owners, so how it was?</h6>
+                                <hr>
+                                <div class="activity-btn-groups">
+                                    <div class="activity-btn-all clearfix">
+                                        <label>What quality was in this service center?</label>
+                                        <div class="activity-btns" id="rate-service-center">
+                                            <ul>
+                                                <li><a href="" class="act-btn">good</a></li>
+                                                <li><a href="" class="act-btn">bad</a></li>
+                                                <li><a href="" class="act-btn">average</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="activity-btn-all clearfix">
+                                        <label>What was the attitude of the workforce?</label>
+                                        <div class="activity-btns" id="rate-service-attittude">
+                                            <ul>
+                                                <li><a href="" class="act-btn">good</a></li>
+                                                <li><a href="" class="act-btn">bad</a></li>
+                                                <li><a href="" class="act-btn">average</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6>How can you discribe the quality of services?</h6>
+                                <hr>
+                                <div class="activity-btn-groups">
+                                    <div class="activity-btn-all clearfix">
+                                        <label>How would you rate your time spent?</label>
+                                        <div class="activity-btns" id="rate-time-spent">
+                                            <ul>
+                                                <li><a href="" class="act-btn">good</a></li>
+                                                <li><a href="" class="act-btn">bad</a></li>
+                                                <li><a href="" class="act-btn">average</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="activity-btn-all clearfix">
+                                        <label>What was the attitude of the workforce?</label>
+                                        <div class="activity-btns" id="rate-attittude-work">
+                                            <ul>
+                                                <li><a href="" class="act-btn">good</a></li>
+                                                <li><a href="" class="act-btn">bad</a></li>
+                                                <li><a href="" class="act-btn">average</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6>Store rating</h6>
+                                <hr>
+                                <div class="ratting-group">
+                                    <!-- Start: Rating 01 -->
+                                    <div class="rating-single">
+                                        <div class="ratting-div clearfix" id="ratting-quality">
+                                            <label>Quality:</label>
+                                            <select class="example-square" name="rating" id="quality-rating" autocomplete="off">
+                                                <option value=""></option>
+                                                <option value="1" data-html="terrible">1</option>
+                                                <option value="2" data-html="poor">2</option>
+                                                <option value="3" data-html="average">3</option>
+                                                <option value="4" data-html="very good">4</option>
+                                                <option value="5" data-html="excellent">5</option>
+                                            </select>
+                                            <div class="ratting-detail" id="quality-rating-detail"><span class="tip"></span> Click to rate</div>
+                                        </div>
+                                    </div>
+                                    <!-- End: Rating 01 -->
+                                    <!-- Start: Rating 02 -->
+                                    <div class="rating-single">
+                                        <div class="ratting-div clearfix" id="ratting-location">
+                                            <label>Location:</label>
+                                            <select class="example-square" name="rating" id="location-rating" autocomplete="off">
+                                                <option value=""></option>
+                                                <option value="1" data-html="terrible">1</option>
+                                                <option value="2" data-html="poor">2</option>
+                                                <option value="3" data-html="average">3</option>
+                                                <option value="4" data-html="very good">4</option>
+                                                <option value="5" data-html="excellent">5</option>
+                                            </select>
+                                            <div class="ratting-detail" id="location-rating-detail"><span class="tip"></span> Click to rate</div>
+                                        </div>
+                                    </div>
+                                    <!-- End: Rating 02 -->
+                                    <!-- Start: Rating 03 -->
+                                    <div class="rating-single">
+                                        <div class="ratting-div clearfix" id="ratting-workers">
+                                            <label>Workers:</label>
+                                            <select class="example-square" name="rating" id="workers-rating" autocomplete="off">
+                                                <option value=""></option>
+                                                <option value="1" data-html="terrible">1</option>
+                                                <option value="2" data-html="poor">2</option>
+                                                <option value="3" data-html="average">3</option>
+                                                <option value="4" data-html="very good">4</option>
+                                                <option value="5" data-html="excellent">5</option>
+                                            </select>
+                                            <div class="ratting-detail" id="workers-rating-detail"><span class="tip"></span> Click to rate</div>
+                                        </div>
+                                    </div>
+                                    <!-- End: Rating 03 -->
+                                    <!-- Start: Rating 04 -->
+                                    <div class="rating-single">
+                                        <div class="ratting-div clearfix" id="ratting-cost">
+                                            <label>Cost:</label>
+                                            <select class="example-square" name="rating" id="cost-rating" autocomplete="off">
+                                                <option value=""></option>
+                                                <option value="1" data-html="terrible">1</option>
+                                                <option value="2" data-html="poor">2</option>
+                                                <option value="3" data-html="average">3</option>
+                                                <option value="4" data-html="very good">4</option>
+                                                <option value="5" data-html="excellent">5</option>
+                                            </select>
+                                            <div class="ratting-detail" id="cost-rating-detail"><span class="tip"></span> Click to rate</div>
+                                        </div>
+                                    </div>
+                                    <!-- End: Rating 04 -->
+                                    <!-- Start: Rating 05 -->
+                                    <div class="rating-single">
+                                        <div class="ratting-div clearfix" id="ratting-time">
+                                            <label>Time:</label>
+                                            <select class="example-square" name="rating" id="time-rating" autocomplete="off">
+                                                <option value=""></option>
+                                                <option value="1" data-html="terrible">1</option>
+                                                <option value="2" data-html="poor">2</option>
+                                                <option value="3" data-html="average">3</option>
+                                                <option value="4" data-html="very good">4</option>
+                                                <option value="5" data-html="excellent">5</option>
+                                            </select>
+                                            <div class="ratting-detail" id="time-rating-detail"><span class="tip"></span> Click to rate</div>
+                                        </div>
+                                    </div>
+                                    <!-- End: Rating 05 -->
+                                    <!-- Start: Rating 06 -->
+                                    <div class="rating-single">
+                                        <div class="ratting-div clearfix" id="ratting-offers">
+                                            <label>Offers:</label>
+                                            <select class="example-square" name="rating" id="offers-rating" autocomplete="off">
+                                                <option value=""></option>
+                                                <option value="1" data-html="terrible">1</option>
+                                                <option value="2" data-html="poor">2</option>
+                                                <option value="3" data-html="average">3</option>
+                                                <option value="4" data-html="very good">4</option>
+                                                <option value="5" data-html="excellent">5</option>
+                                            </select>
+                                            <div class="ratting-detail" id="offers-rating-detail"><span class="tip"></span> Click to rate</div>
+                                        </div>
+                                    </div>
+                                    <!-- End: Rating 06 -->
+                                </div>
+                                <hr>
+                                <div class="btm-fields">
+                                    <label>Tell us one best thing (optional) <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                    <input class="frm-txt-gray" name="" placeholder="Write best thing" type="text">
+                                    <label>Tell us one worst thing (optional) <span class="what-is" data-toggle="tooltip" data-placement="right" title="Tooltip contents goes here">?</span></label>
+                                    <input class="frm-txt-gray" name="" placeholder="Write worst thing" type="text">
+                                    <div class="recomment-radio">
+                                        <label>Do you recommend this Store to other customers?</label>
+                                        <label for="radio-1">Yes</label>
+                                        <input type="radio" name="radio-1" id="radio-1" class="ui-checkboxs">
+                                        <label for="radio-2">No</label>
+                                        <input type="radio" name="radio-2" id="radio-2" class="ui-checkboxs">
+                                    </div>
+                                    <hr>
+                                    <div class="agree-policy">
+                                        <input type="checkbox" name="checkbox-1" id="checkbox-agree" class="ui-checkboxs">
+                                        <label for="checkbox-agree"><span class="policy-datail">I certify that this review is based on my own experience and is my genuine opinion of this dealer/worksop, and that I have no personal or business relationship with this establishment, and have not been offered any incentive or payment originating from the establishment to write this review. I understand that Brand Label has a zero-tolerance policy on fake reviews. <a href="#">Learn more</a></span></label>
+                                    </div>
+                                    <div class="agree-policy-btn">
+                                        <button type="button" name="" class="green-btn-01"><i class="fa fa-paper-plane" aria-hidden="true"></i> Submit Your Experience</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <input type="submit" name="submit" class="submit green-btn-01 action-button" value="Submit" /> -->
+                        </fieldset>
+                        <!-- End: Third Step -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =================================================
+    Profile Area End -->
+    <% include ./partials/footer.html %>
+        <script type="text/javascript" src="js/stepbystep.js"></script>
+        <!-- Step Form Js -->
+        <script>
+        ///first step
+        var cityModel = JSON.parse(readCookie("cityName"));
+        var storeModel = {};
+        $('#city-search').val(cityModel.name);
+        $('#city-search').keyup(function() {
+            if (this.value && this.value != '') {
+                $.ajax({
+                    url: BASE_URL + "getCities?q=" + this.value,
+                    method: 'GET', // 'POST'
+                    cache: false,
+                    dataType: 'json',
+                    data: {},
+                    headers: {},
+                    success: function(response) {
+                        console.log(response)
+                        var html = "";
+                        if (response.status === 'success') {
+                            $('#city-result').html('');
+                            if (response.docs.length > 0) {
+                                $.each(response.docs, function(item) {
+                                    var data = "'" + response.docs[item].name + "','" + response.docs[item]._id + "'";
+                                    html += '<li onclick="selectCity(' + data + ')"><a ><i class="pin-ico"></i>' + response.docs[item].name + '<span>' + response.docs[item].state + '</span></a></li>';
+                                })
+                            } else {
+                                html += '<li onclick="selectCity(' + ' ' + ')"><a><i class="pin-ico"></i>result not found <span></span></a></li>';
+                            }
+
+                        } else {
+                            html += '<li onclick="selectCity(' + ' ' + ')"><a ><i class="pin-ico"></i>result not found <span></span></a></li>';
+                        }
+
+                        $('#city-result').html(html)
+                    },
+                    error: function(error) {
+                        $('.first-step .error-main-mess').text(error.message)
+
+                    },
+                    beforeSend: function() {
+
+                    },
+                    complete: function() {
+                        // We can make status as processing done for forms and all.
+                    }
+                })
+            }
+        });
+
+        $('#store-search').keyup(function() {
+            if (this.value && this.value != '') {
+                $('.first-step .error-main-mess').css('display', 'none');
+                if (!cityModel._id) {
+                    $('.first-step .error-main-mess').css('display', 'block');
+                    $('.first-step .error-main-mess').text("Please select city");
+                    return;
+                }
+                $.ajax({
+                    url: BASE_URL + "getStores/" + cityModel._id + "?q=" + this.value,
+                    method: 'GET', // 'POST'
+                    cache: false,
+                    dataType: 'json',
+                    data: {},
+                    headers: {},
+                    success: function(response) {
+                        var html = "";
+                        if (response.status === 'success') {
+                            $('#store-result').html('');
+                            if (response.docs.length > 0) {
+                                stores = response.docs;
+                                $.each(response.docs, function(item) {
+
+                                    html += '<li onclick="selectStore(' + item + ')"><a ><i class="' + (response.docs[item].type === "Workshop" ? "users-ico" : "car-ico") + '"></i>' + response.docs[item].name + '<span>' + response.docs[item].address + '</span></a></li>';
+                                })
+                            } else {
+                                html += '<li><a href="#"><i class="add-ico"></i> <span>Can`t find what you`re looking for?</span> Add a listing </a></li>';
+                            }
+
+                        } else {
+                            html += '<li><a href="#"><i class="add-ico"></i> <span>Can`t find what you`re looking for?</span> Add a listing </a></li>';
+                        }
+
+                        $('#store-result').html(html)
+                    },
+                    error: function(error) {
+                        $('.second-step .error-main-mess').css('display', 'block');
+                        $('.second-step .error-main-mess').text(error.message)
+                    },
+                    beforeSend: function() {
+
+                    },
+                    complete: function() {
+                        // We can make status as processing done for forms and all.
+                    }
+                })
+            }
+        });
+
+
+        function selectStore(index) {
+            storeModel = stores[index];
+            $('#store-search').val(storeModel.name);
+            $('.first-step').css('display', 'none');
+            $('.second-step').css('display', 'block');
+            $($('#progressbar').find('li')[1]).addClass('active');
+
+            $($('.dealer-bx').find('img')[0]).attr("src", BASE_URL + storeModel.logo);;
+            $('.dealer-bx .categor').text(storeModel.type);
+            $($('.dealer-bx').find('h4')[0]).text(storeModel.name);
+            $('.dealer-bx .phone').text(storeModel.phone);
+            exp_types();
+            car_model();
+
+        }
+
+        function selectCity(city, id) {
+            if (city != '' && id && id != '') {
+                cityModel.city = city;
+                cityModel._id = id;
+                $('#city-search').val(city);
+            } else {
+                cityModel.city = undefined;
+                cityModel._id = undefined;
+            }
+        }
+
+        $('.right-box .submit-btn').click(function(event) {
+            $('.first-step .error-main-mess').css('display', 'none');
+            event.preventDefault();
+            if (!cityModel.city && !cityModel._id) {
+                $('.first-step .error-main-mess').css('display', 'block');
+                $('.first-step .error-main-mess').text("Please select city");
+
+            }
+            if (!storeModel.name && !storeModel._id) {
+                $('.first-step .error-main-mess').css('display', 'block');
+                $('.first-step .error-main-mess').text("Please select store");
+            }
+
+        })
+
+
+        /// Second Step
+
+
+        function exp_types() {
+            $.ajax({
+                url: BASE_URL + "getForms",
+                method: 'GET', // 'POST'
+                cache: false,
+                dataType: 'json',
+                data: {},
+                headers: {},
+                success: function(response) {
+                    if (response.status === 'success') {
+                        if (response.docs.length > 0) {
+                            var options = "";
+                            $.each(response.docs, function(item) {
+                                options += "<option  value='" + response.docs[item]._id + "'>" + response.docs[item].experienceType + "</option>";
+
+                            });
+                            $('#exp_type').html(options);
+                        }
+
+                    } else {
+
+                    }
+
+                },
+                error: function(error) {
+                    $('.second-step .error-main-mess').css('display', 'block');
+                    $('.second-step .error-main-mess').text(error.message)
+                },
+                beforeSend: function() {
+
+                },
+                complete: function() {
+                    // We can make status as processing done for forms and all.
+                }
+            })
+
+        };
+
+        function car_model() {
+            $.ajax({
+                url: BASE_URL + "getCarModel",
+                method: 'GET', // 'POST'
+                cache: false,
+                dataType: 'json',
+                data: {},
+                headers: {},
+                success: function(response) {
+                    if (response.status === 'success') {
+                        if (response.docs.length > 0) {
+                            var options = "";
+                            carmodels = response.docs;
+                            $.each(response.docs, function(item) {
+                                options += "<option  value='" + response.docs[item]._id + "'>" + response.docs[item].model + "</option>";
+
+                            });
+                            $('#car_model').html(options);
+                        }
+
+                    } else {
+
+                    }
+
+                },
+                error: function(error) {
+                    $('.second-step .error-main-mess').css('display', 'block');
+                    $('.second-step .error-main-mess').text(error.message)
+                },
+                beforeSend: function() {
+
+                },
+                complete: function() {
+                    // We can make status as processing done for forms and all.
+                }
+            })
+
+        };
+        $('#car_model').change(function() {
+            if (this.value) {
+                carModel = carmodels.filter(function(a) { return a._id === this.value })
+
+                carModel = carModel[0];
+                $.each(carModel.variant, function(item) {
+                    options += "<option  value='" + response.docs[item]._id + "'>" + response.docs[item].name + "</option>";
+
+                });
+                $('#car_variant').html(options);
+            }
+        });
+        </script>

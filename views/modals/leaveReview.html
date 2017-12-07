@@ -1,0 +1,63 @@
+<div class="modal-dialog" role="document">
+    <!-- <div class="modal-content"> -->
+    <div class="kw-modal ">
+        <button type="button" class="arcticmodal-close kw-modal-close" data-dismiss="modal"></button>
+        <header class="kw-modal-header">
+            <h3>Leave your review</h3>
+        </header>
+        <!-- - - - - - - - - - - - - - End of Header - - - - - - - - - - - - - - - - -->
+        <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+        <div class="kw-modal-content">
+            <div id="validationAlert">
+            </div>
+            <form id="modal-review-form">
+                <ul>
+                    <li class="row">
+                        <div class="col-sm-6">
+                            <label for="review_name">Name</label>
+                            <div class="kw-input-wrapper">
+                                <input type="text" required name="name" id="reviewName">
+                                <input type="hidden" id="uniqueKey" name="uniqueKey" value="<%= uniqueKey %>">
+                            </div>
+                            <!--/ .kw-input-wrapper -->
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="review_email">Email</label>
+                            <div class="kw-input-wrapper">
+                                <input type="email" required name="email" id="reviewEmail">
+                            </div>
+                            <!--/ .kw-input-wrapper -->
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="col-sm-6">
+                            <label for="rating">Rating</label>
+                            <div class="kw-input-wrapper">
+                                <select id="startRating11" required="" name="rating">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                <!-- <input type="number" required name="rating" required="" id="startRating"> -->
+                            </div>
+                            <!--/ .kw-input-wrapper -->
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="col-xs-12">
+                            <label for="review_review">You Review</label>
+                            <div class="kw-input-wrapper">
+                                <textarea rows="5" required name="comment" id="reviewComment"></textarea>
+                            </div>
+                            <!--/ .kw-input-wrapper -->
+                        </div>
+                    </li>
+                </ul>
+                <button class="kw-btn-medium kw-theme-color" type="button" onclick="submitReview('modal-review-form')" id="submitBtnReview"></button>
+            </form>
+        </div>
+    </div>
+    <!-- </div> -->
+</div>

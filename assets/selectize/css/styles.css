@@ -1,0 +1,191 @@
+.selectize:selection { background: #f1f6f7; }
+.selectize:-moz-selection { background: #f1f6f7; }
+
+body.seletize {
+	padding: 0 0 30px 0;
+	font-family: 'Open Sans', Helvetica, arial, sans-serif;
+	font-size: 15px;
+	line-height: 24px;
+	font-weight: 300;
+	color: #444B58;
+	background: #fff;
+	text-shadow: 0 1px 0 rgba(0,0,0,0.05);
+	-webkit-font-smoothing: antialiased;
+}
+
+/**
+ * Github Demo
+ */
+.selectize-control.repositories .selectize-dropdown [data-selectable] {
+	border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.selectize-control.repositories .selectize-dropdown .by {
+	font-size: 11px;
+	opacity: 0.8;
+}
+.selectize-control.repositories .selectize-dropdown .by::before {
+	content: 'by ';
+}
+.selectize-control.repositories .selectize-dropdown .name {
+	font-weight: bold;
+	margin-right: 5px;
+}
+.selectize-control.repositories .selectize-dropdown .title {
+	display: block;
+}
+.selectize-control.repositories .selectize-dropdown .description {
+	font-size: 12px;
+	display: block;
+	opacity: 0.5;
+	white-space: nowrap;
+	width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.selectize-control.repositories .selectize-dropdown .meta {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-size: 10px;
+}
+.selectize-control.repositories .selectize-dropdown .meta li {
+	margin: 0;
+	padding: 0;
+	display: inline;
+	margin-right: 10px;
+}
+.selectize-control.repositories .selectize-dropdown .meta li span {
+	font-weight: bold;
+}
+.selectize-control.repositories::before {
+	-moz-transition: opacity 0.2s;
+	-webkit-transition: opacity 0.2s;
+	transition: opacity 0.2s;
+	content: ' ';
+	z-index: 2;
+	position: absolute;
+	display: block;
+	top: 50%;
+	right: 34px;
+	width: 16px;
+	height: 16px;
+	margin: -8px 0 0 0;
+	background: url(../images/spinner.gif);
+	background-size: 16px 16px;
+	opacity: 0;
+}
+.selectize-control.repositories.loading::before {
+	opacity: 0.4;
+}
+
+.selectize-control.movies .selectize-dropdown [data-selectable] {
+	border-bottom: 1px solid rgba(0,0,0,0.05);
+	height: 60px;
+	position: relative;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	padding: 10px 10px 10px 60px;
+}
+.selectize-control.movies .selectize-dropdown [data-selectable]:last-child {
+	border-bottom: 0 none;
+}
+.selectize-control.movies .selectize-dropdown .by {
+	font-size: 11px;
+	opacity: 0.8;
+}
+.selectize-control.movies .selectize-dropdown .by::before {
+	content: 'by ';
+}
+.selectize-control.movies .selectize-dropdown .name {
+	font-weight: bold;
+	margin-right: 5px;
+}
+.selectize-control.movies .selectize-dropdown .description {
+	font-size: 12px;
+	color: #a0a0a0;
+}
+.selectize-control.movies .selectize-dropdown .actors,
+.selectize-control.movies .selectize-dropdown .description,
+.selectize-control.movies .selectize-dropdown .title {
+	display: block;
+	white-space: nowrap;
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.selectize-control.movies .selectize-dropdown .actors {
+	font-size: 10px;
+	color: #a0a0a0;
+}
+.selectize-control.movies .selectize-dropdown .actors span {
+	color: #606060;
+}
+.selectize-control.movies .selectize-dropdown img {
+	height: 60px;
+	left: 10px;
+	position: absolute;
+	border-radius: 3px;
+	background: rgba(0,0,0,0.04);
+}
+.selectize-control.movies .selectize-dropdown .meta {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-size: 10px;
+}
+.selectize-control.movies .selectize-dropdown .meta li {
+	margin: 0;
+	padding: 0;
+	display: inline;
+	margin-right: 10px;
+}
+.selectize-control.movies .selectize-dropdown .meta li span {
+	font-weight: bold;
+}
+.selectize-control.movies::before {
+	-moz-transition: opacity 0.2s;
+	-webkit-transition: opacity 0.2s;
+	transition: opacity 0.2s;
+	content: ' ';
+	z-index: 2;
+	position: absolute;
+	display: block;
+	top: 50%;
+	right: 34px;
+	width: 16px;
+	height: 16px;
+	margin: -8px 0 0 0;
+	background: url(../images/spinner.gif);
+	background-size: 16px 16px;
+	opacity: 0;
+}
+.selectize-control.movies.loading::before {
+	opacity: 0.4;
+}
+
+.selectize-control.contacts .selectize-input [data-value] .email {
+	opacity: 0.5;
+}
+.selectize-control.contacts .selectize-input [data-value] .name + .email {
+	margin-left: 5px;
+}
+.selectize-control.contacts .selectize-input [data-value] .email:before {
+	content: '<';
+}
+.selectize-control.contacts .selectize-input [data-value] .email:after {
+	content: '>';
+}
+.selectize-control.contacts .selectize-dropdown .caption {
+	font-size: 12px;
+	display: block;
+	opacity: 0.5;
+}
+.selectize-control {
+	width: 100%;
+}
+/*.selectize-dropdown {
+	display: none !important;
+}*/
+.filter-header-area .selectize-input {
+	border: none;
+}

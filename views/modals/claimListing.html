@@ -1,0 +1,35 @@
+<div class="modal-dialog" role="document">
+    <!-- <div class="modal-content"> -->
+    <div class="kw-modal ">
+        <button type="button" class="arcticmodal-close kw-modal-close" data-dismiss="modal"></button>
+        <header class="kw-modal-header">
+            <h3><%= headerName %></h3>
+        </header>
+        <!-- - - - - - - - - - - - - - End of Header - - - - - - - - - - - - - - - - -->
+        <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+        <div class="kw-modal-content">
+            <div id="validationAlert">
+            </div>
+            <form id="form-country_v1" name="form-country_v1">
+                <ul>
+                    <li class="row">
+                        <div class="col-xs-12">
+                            <label for="text-input-1">Name</label>
+                            <input type="text" required name="name" id="clName">
+                            <input type="hidden" id="contractorId1" name="contractorId" value="<%= contractorId %>">
+                        </div>
+                    </li>
+                    <!--/ .row -->
+                    <li class="row">
+                        <div class="col-xs-12">
+                            <label for="text-input-2">Email</label>
+                            <input type="email" required name="email" id="clEmail">
+                        </div>
+                    </li>
+                </ul>
+                <button class="kw-btn-medium kw-theme-color" type="button" onclick="submitClaimListing()" id="submitBtnForCL">Submit</button>
+            </form>
+        </div>
+    </div>
+    <!-- </div> -->
+</div>

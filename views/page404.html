@@ -1,0 +1,35 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-inner">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head store-banner" style="background: url(<%=((data.store && data.store.makeId && data.store.makeId.brandingImage) ? BASE_URL+data.store.makeId.brandingImage : BASE_URL)%>), url(<%=BASE_URL%>img/store-head-bg.jpg);">
+                <% include ./partials/menu-area.html %>
+              
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <section class="who-we-are">
+        <div class="container clearfix">
+            <!-- Start: Help Container -->
+            <div class="help-container" style="margin: 120px 0 100px 0;">
+                <div class="result-section">
+                    <div class="help-title clearfix">
+                        <h3>404 Page not found</h3>
+                    </div>
+                    <hr>
+                    <div class="help-result">
+                        <div class="no-result">
+                            <h5>We're sorry, but we can't find the page you were looking for.</h5>
+                            <p class="kw-404-message">It's probably some thing we've done wrong but now we know about it and we'll try to fix it.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Start: Help Container -->
+        </div>
+    </section>
+    <!-- Footer Area Start 
+    ====================================================== -->
+    <% include ./partials/footer.html %>

@@ -1,0 +1,199 @@
+<% include ./partials/header.html %>
+    <!-- Header Area Start 
+    ====================================================== -->
+    <header class="header-area-main">
+        <% include ./partials/top-head.html %>
+            <!-- Start: main Header -->
+            <div class="main-head">
+                <% include ./partials/menu-area.html %>
+                    <!-- Start: Banner Area -->
+                    <div class="banner-main">
+                        <div class="container">
+                            <form method="get" id="searchForm">
+                                <h1>share your experience</h1>
+                                <h4> of owning/servicing car from a specific store </h4>
+                                <div class="search-form inner-pg">
+                                    <div class="left-box">
+                                        <ul>
+                                            <li>
+                                                <label>Search</label>
+                                                <input type="text" class="dealerships-togle" id="store-search" placeholder="dealerships or workshops" name="searchField" autocomplete="off">
+                                                <!--   <input type="hidden"  id="storeId" name="storeId"> -->
+                                                <div class="serch-res-dealer">
+                                                    <span class="toper"></span>
+                                                    <ul id="store-result">
+                                                        <li><a href="<%=BASE_URL +'contact#add-store'%>"><i class="add-ico"></i> <span>Can`t find what you`re looking for?</span> Add a new store </a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <label>Near</label>
+                                                <input type="text" class="locations-togle" id="city-search" placeholder="San Francisco, CA" autocomplete="off">
+                                                <div class="serch-res-location">
+                                                    <span class="toper"></span>
+                                                    <ul id="city-result">
+                                                        <%data.cities.forEach(function(item){%>
+                                                            <li style="cursor: pointer;" onclick="selectCity('<%=item.name%>','<%=item._id%>')"><a><i class="pin-ico"></i><%=item.name%> <span><%=item.state?item.state:''%></span></a></li>
+                                                            <%})%>
+                                                                <!--   <li><a href="#"><i class="pin-ico"></i> San Diego <span>California, United States</span></a></li>
+                                                        <li><a href="#"><i class="pin-ico"></i> San Antonio <span>Texas, United States</span></a></li> -->
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <input type="hidden" name="city" id="cityId">
+                                    <input type="hidden" name="type" id="type">
+                                    <div class="right-box">
+                                        <button type="submit" name="next" class="submit-btn clearfix action-button"><span></span> Search</button>
+                                    </div>
+                                </div>
+                                <ul class="quick-links">
+                                    <li><a href="javascript:;" id="dealerships" class="clearfix" onclick="chooseStoreType('dealership',this)">
+                                    <span class="dealer-ico"></span> Dealerships</a></li>
+                                    <li><a href="javascript:;" id="workshops" class="clearfix" onclick="chooseStoreType('workshop')">
+                                    <span class="workshop-ico"></span> Workshops</a></li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Start: Banner Area -->
+            </div>
+            <!-- Start: main Header -->
+    </header>
+    <!-- =================================================
+    Header Area End -->
+    <!-- Browse Area Start
+    ====================================================== -->
+    <section class="browse-main">
+        <div class="container">
+            <div class="browse-head clearfix">
+                <h3>Browse by <span>Make</span></h3>
+                <a class="show-less"><span>SHOW ALL</span> <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            </div>
+            <div class="row logos-all clearfix" id="allMakes">
+            </div>
+            <hr id="browse-bottom-hr">
+        </div>
+    </section>
+    <!-- =================================================
+    Browse Area End -->
+    <!-- Experiences Area Start 
+    ====================================================== -->
+    <section class="experiences-main" style="display: <%=(data.experiences.length>0?'block':'none')%>">
+        <div class="container">
+            <h3>Latest experiences</h3>
+            <div class="experience-all">
+                <div class="owl-carousel owl-theme" id="home-carousel">
+                    <% data.experiences.forEach(function(element) {%>
+                        <!-- Start: Experience 01 -->
+                        <div class="item" id="experience">
+                            <div class="experience-single">
+                                <a href="<%=BASE_URL+changeToVanityurl(data.city?data.city.name:'-')+'/'+element.storeId.vanityUrl+'?store='+element.storeId.storeId%>"><img class="logo-img" 
+                                onerror="this.src='<%=BASE_URL%>img/store-default-ico.png'"
+                                src="<%=( BASE_URL + (element.storeId ? element.storeId.logo : '') )%>" alt="" >
+                                </a>
+                                <h5 class="truncate"><a href="<%=BASE_URL+changeToVanityurl(data.city?data.city.name:'-')+'/'+element.storeId.vanityUrl+'?store='+element.storeId.storeId%>">About <%=(element.storeId ? element.storeId.name:'')%></a></h5>
+                                <%if(element.posts &&element.posts.length>0&& element.posts[element.posts.length - 1].title.length>100){%>
+                                    <p style="min-height: 75px;" class="linkify">
+                                        <%=(element.posts[element.posts.length-1].title.slice(0,100))%>...
+                                            <a target="_blank" class="learn-more-link" href="<%=BASE_URL +changeToVanityurl(data.city && data.city.name || '-')+'/' + (element.storeId && element.storeId.vanityUrl || '-') + '/experiences/'+ changeToVanityurl( element.posts[0].title) + '?experience=' + element.experienceId %>">
+                                Read Details <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                </a></p>
+                                    <%}else{%>
+                                        <p style="min-height: 75px;" class="linkify">
+                                            <%=(element.posts && element.posts.length > 0 ? element.posts[element.posts.length-1].title: '')%>
+                                                <a target="_blank" class="learn-more-link" href="<%=BASE_URL +changeToVanityurl(data.city && data.city.name || '-')+'/' + (element.storeId && element.storeId.vanityUrl || '-') + '/experiences/'+changeToVanityurl((element.posts && element.posts.length > 0 && element.posts[0].title)?element.posts[0].title:'') + '?experience=' + element.experienceId %>">
+                                Read Details <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                </a></p>
+                                        <%}%>
+                                            <div class="like-rate">
+                                                <span class="rating mtr-rating cust-mtr-rating">
+                                                <ul class="mt-ratings" style="font-size: 15px;">
+                                                    <li class="<%=(element.posts.length>0&&element.posts[element.posts.length-1].rating)>=1 ? 'active': ''%>">
+                                                        <a href="javascript:;"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                    <li class="<%=(element.posts.length>0&&element.posts[element.posts.length-1].rating)>= 2 ? 'active': ''%>">
+                                                        <a href="javascript:;"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                    <li class="<%=(element.posts.length>0&&element.posts[element.posts.length-1].rating)>= 3 ? 'active': ''%>">
+                                                        <a href="javascript:;"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                    <li class="<%=(element.posts.length>0&&element.posts[element.posts.length-1].rating)>=4 ? 'active': ''%>">
+                                                        <a href="javascript:;"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                    <li class="<%=(element.posts.length>0&&element.posts[element.posts.length-1].rating)>= 5 ? 'active': ''%>">
+                                                        <a href="javascript:;"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                </ul>
+                                    </span>
+                                                <span class="likes <%=element.posts.length>0&&element.posts[element.posts.length-1]._id%>latest">
+                                <a href="javascript:;" 
+                                class="<%=(data.userDetails&&element.posts.length>0&&element.posts[element.posts.length-1].likes.findIndex(x=> x.like==data.userDetails._id)!=-1? 'active':'')%>" 
+                                onclick="likePost('Post','<%=data.userDetails&&data.userDetails._id%>','<%=element._id%>','<%=element.posts.length>0&&element.posts[element.posts.length-1]._id%>','likes','latest')"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like (<%=(element.posts.length>0?element.posts[element.posts.length-1].likes.length:'0')%>)</a>
+                                                </span>
+                                            </div>
+                                            <div class="user-details clearfix">
+                                                <span class="profile-img">
+                                    <img src="<%=( BASE_URL + (element.userId && element.userId.anonymous ? element.userId.avatarImage: (element.userId ? element.userId.profileImage : '') ))%>" 
+                                    onerror="this.src='<%=BASE_URL%>img/user-demo.png'" alt=""> 
+                                    <!-- From --> <a href="<%=BASE_URL+'profile/'+(element.userId&&element.userId.userId)%>">
+                                        <%=(element.userId && element.userId.anonymous ? element.userId.displayName: (element.userId ? element.userId.name : 'Unknown user') )%>
+                                       </a></span>
+                                            </div>
+                            </div>
+                        </div>
+                        <!-- End: Experience 01 -->
+                        <%});%>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =================================================
+    Experiences Area End -->
+    <!-- Counts Area Start 
+    ====================================================== -->
+    <!--  <section class="counter-main">
+        <div class="masker-cont" id="counter">
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-3 count-single clearfix">
+                        <div class="icon-cont"><img src="img/count-ico-1.png" alt=""></div>
+                        <div class="counter-div"><span class="number"><span class="counter">1500</span> +</span>cars for sale</div>
+                    </div>
+                    <div class="col-md-3 count-single clearfix">
+                        <div class="icon-cont"><img src="img/count-ico-2.png" alt=""></div>
+                        <div class="counter-div"><span class="number"><span class="counter">1750</span> +</span>VISITORS PER DAY</div>
+                    </div>
+                    <div class="col-md-3 count-single clearfix">
+                        <div class="icon-cont"><img src="img/count-ico-3.png" alt=""></div>
+                        <div class="counter-div"><span class="number"><span class="counter">3500</span> +</span>DEALER REVIEWS</div>
+                    </div>
+                    <div class="col-md-3 count-single clearfix">
+                        <div class="icon-cont"><img src="img/count-ico-4.png" alt=""></div>
+                        <div class="counter-div"><span class="number"><span class="counter">250</span> +</span>VERIFIED DEALERS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    <!-- =================================================
+    Counts Area End -->
+    <!-- Review Area Start 
+    ====================================================== -->
+    <section id="review-main"></section>
+    <!-- =================================================
+    Review Area End -->
+    <% include ./partials/footer.html %>
+        <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('.counter').counterUp({
+                delay: 10,
+                time: 3000
+            });
+        });
+        </script>
+        <style type="text/css">
+            .exp-desc {
+            overflow: hidden;            
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+        }
+        </style>
